@@ -149,24 +149,16 @@ export async function submitPoolOpening(
           // Address + last name match = same household, confident match
           custId = lastNameMatch.customer_id;
         }
-        // Address match but different last name = possibly new owner, don't match
+        // Address match but different last name = flag for review (possible new owner)
+        // Don't auto-match or auto-create — leave customer_id null so staff can resolve
       }
     }
 
-    // 2. If no address match, try exact name match as a fallback
-    if (!custId) {
-      const { data: nameMatches } = await supabase
-        .from('customers')
-        .select('customer_id')
-        .ilike('name', name.trim())
-        .limit(1);
-      if (nameMatches?.length) {
-        custId = nameMatches[0].customer_id;
-      }
-    }
-
-    // 3. No match found — create a new customer
-    if (!custId) {
+    // 2. No match at all — create a new customer
+    // (Only if there was NO address match. If address matched with wrong last name,
+    //  we skip creation and leave customer_id null for staff review.)
+    if (!custId && !addrNormalized.length) {
+      // No address provided — can't match, create new
       const cs = (cityState || '').split(',').map(s => s.trim());
       const { data: newCust } = await supabase
         .from('customers')
@@ -185,6 +177,36 @@ export async function submitPoolOpening(
         .select('customer_id')
         .single();
       custId = newCust?.customer_id || null;
+    } else if (!custId) {
+      // We searched but found no address match at all — safe to create new customer
+      const { data: addrCheck } = await supabase
+        .from('customers')
+        .select('customer_id')
+        .ilike('address', `%${addrNormalized.split(' ').slice(0, Math.min(3, addrNormalized.split(' ').length)).join(' ')}%`)
+        .limit(1);
+
+      if (!addrCheck?.length) {
+        // Address not in DB at all — truly new customer
+        const cs = (cityState || '').split(',').map(s => s.trim());
+        const { data: newCust } = await supabase
+          .from('customers')
+          .insert({
+            name: name,
+            address: address,
+            city: cs[0] || null,
+            state: cs[1] || null,
+            zip: zip || null,
+            phone: phone,
+            email: email || null,
+            pool_type: poolType === 'inground' ? 'Inground' : poolType === 'aboveground' ? 'Above Ground' : null,
+            pool_size: poolSize || null,
+            cover_type: coverType || null,
+          })
+          .select('customer_id')
+          .single();
+        custId = newCust?.customer_id || null;
+      }
+      // else: address exists but last name didn't match — leave customer_id null for review
     }
 
     const { error } = await supabase.from('pool_openings').insert({
