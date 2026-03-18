@@ -78,26 +78,29 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Locations */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">
-              Contact Us
+              Locations
             </h3>
-            <ul className="space-y-3 text-sm text-slate-400">
-              <li className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-primary-light mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <div className="space-y-4 text-sm text-slate-400">
+              <div>
+                <p className="text-white font-semibold text-xs uppercase tracking-wider mb-1">North</p>
+                <p>2225 N 25th Street<br />Terre Haute, IN 47804</p>
+                <p className="text-slate-500 mt-1">Mon&ndash;Fri 9&ndash;5</p>
+              </div>
+              <div>
+                <p className="text-white font-semibold text-xs uppercase tracking-wider mb-1">South</p>
+                <p>5171 S US Highway 41<br />Terre Haute, IN 47802</p>
+                <p className="text-slate-500 mt-1">Mon, Thu&ndash;Fri 11&ndash;6 &middot; Sat 9&ndash;4 &middot; Sun 10&ndash;2</p>
+              </div>
+              <a href="tel:8122321292" className="inline-flex items-center gap-2 hover:text-white transition-colors mt-2">
+                <svg className="w-4 h-4 text-primary-light shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                 </svg>
-                <a href="tel:8122321292" className="hover:text-white transition-colors">(812) 232-1292</a>
-              </li>
-              <li className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-primary-light mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                </svg>
-                <span>2225 North 25th Street<br />Terre Haute, IN 47804</span>
-              </li>
-            </ul>
+                (812) 232-1292
+              </a>
+            </div>
           </div>
         </div>
 
