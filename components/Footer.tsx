@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { getStoreHours, condenseHours } from '@/lib/hours';
 
 const quickLinks = [
   { href: '/', label: 'Home' },
@@ -18,7 +19,10 @@ const services = [
   'Service & Repair',
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const hours = await getStoreHours();
+  const northSummary = condenseHours(hours.north);
+  const southSummary = condenseHours(hours.south);
   return (
     <footer className="bg-slate-900 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
@@ -87,12 +91,12 @@ export default function Footer() {
               <div>
                 <p className="text-white font-semibold text-xs uppercase tracking-wider mb-1">North</p>
                 <p>2225 N 25th Street<br />Terre Haute, IN 47804</p>
-                <p className="text-slate-500 mt-1">Mon&ndash;Fri 9&ndash;5</p>
+                <p className="text-slate-500 mt-1">{northSummary}</p>
               </div>
               <div>
                 <p className="text-white font-semibold text-xs uppercase tracking-wider mb-1">South</p>
                 <p>5171 S US Highway 41<br />Terre Haute, IN 47802</p>
-                <p className="text-slate-500 mt-1">Mon, Thu&ndash;Fri 11&ndash;6 &middot; Sat 9&ndash;3 &middot; Sun 10&ndash;2</p>
+                <p className="text-slate-500 mt-1">{southSummary}</p>
               </div>
               <a href="tel:8122321292" className="inline-flex items-center gap-2 hover:text-white transition-colors mt-2">
                 <svg className="w-4 h-4 text-primary-light shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

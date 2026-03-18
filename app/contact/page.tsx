@@ -1,41 +1,39 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getStoreHours, type HoursEntry } from '@/lib/hours';
 
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Contact Sparkle Pools in Terre Haute, IN. Two locations — North on 25th Street and South on US 41. Call (812) 232-1292.',
 };
 
-const locations = [
-  {
-    name: 'Sparkle Pools North',
-    address: '2225 N 25th Street',
-    city: 'Terre Haute, IN 47804',
-    phone: '(812) 232-1292',
-    hours: [
-      { day: 'Monday \u2013 Friday', time: '9:00 AM \u2013 5:00 PM' },
-      { day: 'Saturday', time: 'Closed' },
-      { day: 'Sunday', time: 'Closed' },
-    ],
-  },
-  {
-    name: 'Sparkle Pools South',
-    address: '5171 S US Highway 41',
-    city: 'Terre Haute, IN 47802',
-    phone: '(812) 232-1292',
-    hours: [
-      { day: 'Monday', time: '11:00 AM \u2013 6:00 PM' },
-      { day: 'Tuesday', time: 'Closed' },
-      { day: 'Wednesday', time: 'Closed' },
-      { day: 'Thursday', time: '11:00 AM \u2013 6:00 PM' },
-      { day: 'Friday', time: '11:00 AM \u2013 6:00 PM' },
-      { day: 'Saturday', time: '9:00 AM \u2013 3:00 PM' },
-      { day: 'Sunday', time: '10:00 AM \u2013 2:00 PM' },
-    ],
-  },
-];
+export const revalidate = 300; // refresh every 5 minutes
 
-export default function ContactPage() {
+function formatHours(data: HoursEntry[]): { day: string; time: string }[] {
+  const result: { day: string; time: string }[] = [];
+  let i = 0;
+  while (i < data.length) {
+    const current = data[i];
+    const time = current.closed ? 'Closed' : `${current.open} \u2013 ${current.close}`;
+    let j = i + 1;
+    while (j < data.length) {
+      const next = data[j];
+      const nextTime = next.closed ? 'Closed' : `${next.open} \u2013 ${next.close}`;
+      if (nextTime === time) j++; else break;
+    }
+    const day = j - i > 1 ? `${data[i].day} \u2013 ${data[j-1].day}` : data[i].day;
+    result.push({ day, time });
+    i = j;
+  }
+  return result;
+}
+
+export default async function ContactPage() {
+  const hours = await getStoreHours();
+  const locations = [
+    { name: 'Sparkle Pools North', address: '2225 N 25th Street', city: 'Terre Haute, IN 47804', phone: '(812) 232-1292', hours: formatHours(hours.north) },
+    { name: 'Sparkle Pools South', address: '5171 S US Highway 41', city: 'Terre Haute, IN 47802', phone: '(812) 232-1292', hours: formatHours(hours.south) },
+  ];
   return (
     <>
       {/* Header */}
