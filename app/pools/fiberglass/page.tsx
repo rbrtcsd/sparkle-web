@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -17,38 +18,62 @@ const checkIcon = (
 const shellCategories = [
   {
     title: 'Rectangular / Classic',
-    models: 'Apollo 14, Ariel 16, Astoria (12/14/16), Cape Cod (12/14/16), Corinthian (12/14/16), Delray, Kingston, Lake Shore, Monaco, Olympia (12/14/16), Providence 14, Sirius, St. Thomas',
+    models: [
+      { name: 'Apollo 14', image: '/images/shells/apollo-14.jpg' },
+      { name: 'Ariel 16', image: '/images/shells/ariel-16.jpg' },
+      { name: 'Astoria', image: '/images/shells/astoria.jpg' },
+      { name: 'Cape Cod', image: '/images/shells/cape-cod.jpg' },
+      { name: 'Corinthian', image: '/images/shells/corinthian.jpg' },
+      { name: 'Monaco', image: '/images/shells/monaco.jpg' },
+      { name: 'Olympia', image: '/images/shells/olympia.jpg' },
+      { name: 'Coral 16', image: '/images/shells/coral-16.jpg' },
+    ],
   },
   {
     title: 'Freeform / Curved',
-    models: 'Aruba, Barcelona, Bay Isle, Bermuda (12/14/16), Cayman (14/16), Claremont, Coronado, Fiji, Jamaica (10/12/14), Key West, Pleasant Cove, Synergy, Vista Isle',
+    models: [
+      { name: 'Aruba', image: '/images/shells/aruba.jpg' },
+      { name: 'Barcelona', image: '/images/shells/barcelona.jpg' },
+      { name: 'Bermuda', image: '/images/shells/bermuda.jpg' },
+      { name: 'Jamaica', image: '/images/shells/jamaica.jpg' },
+      { name: 'Key West', image: '/images/shells/key-west.jpg' },
+      { name: 'Synergy', image: '/images/shells/synergy.jpg' },
+      { name: 'Vista Isle', image: '/images/shells/vista-isle.jpg' },
+    ],
   },
   {
     title: 'Geometric',
-    models: 'Athens (13.23/13.37), Axiom (12/14/16), Coral 16, San Marino (12.23/12.26), Tuscan (11\u201314 series)',
+    models: [
+      { name: 'Athens', image: '/images/shells/athens.jpg' },
+      { name: 'Axiom', image: '/images/shells/axiom-14.jpg' },
+      { name: 'Tuscan', image: '/images/shells/tuscan.jpg' },
+    ],
   },
   {
     title: 'Plunge Pools',
-    models: 'Enchantment (9.17/9.21/9.24), Milan (8.14/10.16/10.20)',
+    models: [
+      { name: 'Milan', image: '/images/shells/milan.jpg' },
+      { name: 'Enchantment', image: '/images/shells/enchantment.jpg' },
+    ],
   },
 ];
 
 const crystalColors = [
-  { name: 'Sapphire Blue', color: '#1a4b8c' },
-  { name: 'Ocean Blue', color: '#2980b9' },
-  { name: 'Night Sky', color: '#1a1a2e' },
-  { name: 'Shale Gray', color: '#7f8c8d' },
-  { name: 'Coastal Bronze', color: '#8b6914' },
-  { name: 'Pearl White', color: '#f5f0e8' },
+  { name: 'Sapphire Blue', image: '/images/shells/color-crystal-sapphire.jpg' },
+  { name: 'Ocean Blue', image: '/images/shells/color-crystal-ocean.jpg' },
+  { name: 'Night Sky', image: '/images/shells/color-crystal-nightsky.jpg' },
+  { name: 'Shale Gray', image: '/images/shells/color-crystal-shale.jpg' },
+  { name: 'Coastal Bronze', image: '/images/shells/color-crystal-bronze.jpg' },
+  { name: 'Pearl White', image: '/images/shells/color-crystal-pearl.jpg' },
 ];
 
 const classicColors = [
-  { name: 'Sapphire Blue', color: '#1a4b8c' },
-  { name: 'Ocean Blue', color: '#2980b9' },
-  { name: 'Night Sky', color: '#1a1a2e' },
-  { name: 'Shale Gray', color: '#7f8c8d' },
-  { name: 'Coastal Bronze', color: '#8b6914' },
-  { name: 'Whisper White', color: '#fefefe' },
+  { name: 'Sapphire Blue', image: '/images/shells/color-classic-sapphire.jpg' },
+  { name: 'Ocean Blue', image: '/images/shells/color-classic-ocean.jpg' },
+  { name: 'Night Sky', image: '/images/shells/color-classic-nightsky.jpg' },
+  { name: 'Shale Gray', image: '/images/shells/color-classic-shale.jpg' },
+  { name: 'Coastal Bronze', image: '/images/shells/color-classic-bronze.jpg' },
+  { name: 'Whisper White', image: '/images/shells/color-classic-whisper.jpg' },
 ];
 
 export default function FiberglassPoolsPage() {
@@ -134,17 +159,37 @@ export default function FiberglassPoolsPage() {
               Dozens of shapes and sizes to fit any backyard, organized by style.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+
+          <div className="space-y-16">
             {shellCategories.map((cat) => (
-              <div
-                key={cat.title}
-                className="bg-white rounded-2xl border border-slate-100 shadow-lg shadow-slate-100/50 p-6 sm:p-8"
-              >
-                <h3 className="text-xl font-bold text-slate-900 mb-4">{cat.title}</h3>
-                <p className="text-slate-500 leading-relaxed text-sm">{cat.models}</p>
+              <div key={cat.title}>
+                <h3 className="text-xl font-bold text-slate-900 mb-6">{cat.title}</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                  {cat.models.map((model) => (
+                    <div
+                      key={model.name}
+                      className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                    >
+                      <div className="relative aspect-square">
+                        <Image
+                          src={model.image}
+                          alt={model.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
+                      </div>
+                      <p className="text-sm font-medium text-slate-700 text-center py-3">{model.name}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
+
+          <p className="mt-12 text-sm text-slate-400 text-center">
+            Most models come in multiple sizes (12, 14, 16 ft and more). Ask us which sizes are available for your favorite shape.
+          </p>
         </div>
       </section>
 
@@ -169,10 +214,15 @@ export default function FiberglassPoolsPage() {
               <div className="grid grid-cols-3 gap-4">
                 {crystalColors.map((c) => (
                   <div key={c.name} className="text-center">
-                    <div
-                      className="w-full aspect-square rounded-xl border border-slate-200 shadow-sm"
-                      style={{ backgroundColor: c.color }}
-                    />
+                    <div className="relative w-full aspect-square rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                      <Image
+                        src={c.image}
+                        alt={c.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 30vw, 15vw"
+                      />
+                    </div>
                     <p className="mt-2 text-xs font-medium text-slate-600">{c.name}</p>
                   </div>
                 ))}
@@ -186,10 +236,15 @@ export default function FiberglassPoolsPage() {
               <div className="grid grid-cols-3 gap-4">
                 {classicColors.map((c) => (
                   <div key={c.name} className="text-center">
-                    <div
-                      className="w-full aspect-square rounded-xl border border-slate-200 shadow-sm"
-                      style={{ backgroundColor: c.color }}
-                    />
+                    <div className="relative w-full aspect-square rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                      <Image
+                        src={c.image}
+                        alt={c.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 30vw, 15vw"
+                      />
+                    </div>
                     <p className="mt-2 text-xs font-medium text-slate-600">{c.name}</p>
                   </div>
                 ))}
