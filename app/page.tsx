@@ -103,14 +103,14 @@ export default function Home() {
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         {/* Background image */}
         <Image
-          src="/images/hero-pool-night.jpg"
-          alt="Beautiful pool at night with LED lighting and water features"
+          src="/images/hero-pool-day.jpg"
+          alt="Custom inground pool with stone patio, water features, and LED lighting"
           fill
           className="object-cover"
           priority
         />
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-blue-900/40 to-primary/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-blue-900/50 to-primary/40" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
           <div className="max-w-3xl">
