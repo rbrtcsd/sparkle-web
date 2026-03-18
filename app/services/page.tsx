@@ -11,6 +11,7 @@ const services = [
     title: 'Inground Vinyl Liner Pools',
     description:
       'Build your dream pool with a custom inground vinyl liner pool. We use Latham steel and polymer wall systems paired with premium Merlin Industries vinyl liners \u2014 available in dozens of patterns from the Aqua Intense, Aqua Max, and designer collections. Every pool is custom-designed to fit your yard and lifestyle.',
+    link: '/pools/inground',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
@@ -21,6 +22,7 @@ const services = [
     title: 'Fiberglass Pools',
     description:
       'Want a pool installed in days instead of months? Our Latham fiberglass pools feature Advanced Composite construction and Crystite Gel Coat finishes for unmatched durability. Choose from a wide range of shapes and sizes \u2014 from compact plunge pools to full-size family pools.',
+    link: '/pools/inground',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
@@ -31,6 +33,7 @@ const services = [
     title: 'Above Ground Pools',
     description:
       "Quality doesn't have to break the bank. We offer the Nova STR steel above ground pool and the Revelle hybrid model \u2014 both built to last with sleek designs that look great in any yard. Professional installation included.",
+    link: '/pools/above-ground',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -132,6 +135,11 @@ export default function ServicesPage() {
                     <p className="mt-3 text-slate-500 leading-relaxed">
                       {service.description}
                     </p>
+                    {service.link && (
+                      <Link href={service.link} className="inline-flex items-center mt-4 text-sm font-semibold text-primary hover:text-primary-dark transition-colors">
+                        Learn More &rarr;
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
