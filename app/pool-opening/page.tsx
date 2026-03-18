@@ -1,13 +1,31 @@
 'use client';
 
-import { useActionState } from 'react';
-import { submitPoolOpening, type OpeningFormState } from './actions';
+import { useActionState, useState, useEffect } from 'react';
+import { submitPoolOpening, getAvailableWeeks, type OpeningFormState, type WeekOption } from './actions';
 import Link from 'next/link';
+
+const COVER_OPTIONS: Record<string, string[]> = {
+  inground: ['None', 'Solid w/ Watertubes', 'Solid/Mesh Safety', 'Automatic', 'Other'],
+  aboveground: ['None', 'Solid w/ Winch and Cable', 'Other'],
+};
 
 const initialState: OpeningFormState = { success: false, error: null };
 
 export default function PoolOpeningPage() {
   const [state, formAction, isPending] = useActionState(submitPoolOpening, initialState);
+  const [poolType, setPoolType] = useState<string>('');
+  const [weeks, setWeeks] = useState<WeekOption[]>([]);
+  const [weeksLoading, setWeeksLoading] = useState(true);
+  const [selectedWeek, setSelectedWeek] = useState<WeekOption | null>(null);
+
+  useEffect(() => {
+    getAvailableWeeks().then((w) => {
+      setWeeks(w);
+      setWeeksLoading(false);
+    });
+  }, []);
+
+  const coverOptions = poolType ? COVER_OPTIONS[poolType] || [] : [];
 
   if (state.success) {
     return (
@@ -28,25 +46,16 @@ export default function PoolOpeningPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">
-              Pool opening scheduled!
-            </h2>
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">Pool opening scheduled!</h2>
             <p className="text-lg text-slate-500 leading-relaxed mb-8">
               We&apos;ve received your pool opening request. Our team will reach out to confirm your appointment.
-              Openings are scheduled on a first-come, first-served basis, and we&apos;ll do our best to accommodate
-              your preferred timing.
+              Openings are scheduled on a first-come, first-served basis, and we&apos;ll do our best to accommodate your preferred timing.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
-              >
+              <Link href="/" className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors">
                 Back to Home
               </Link>
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition-colors"
-              >
+              <Link href="/services" className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition-colors">
                 View Our Services
               </Link>
             </div>
@@ -116,19 +125,18 @@ export default function PoolOpeningPage() {
             )}
 
             <form action={formAction} className="space-y-6">
+              {/* Hidden fields for week data */}
+              <input type="hidden" name="week_id" value={selectedWeek?.week_id || ''} />
+              <input type="hidden" name="week_label" value={selectedWeek?.label || ''} />
+
               {/* Name */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                   Full Name <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
+                <input type="text" id="name" name="name" required
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                  placeholder="John Smith"
-                />
+                  placeholder="John Smith" />
               </div>
 
               {/* Phone & Email */}
@@ -137,26 +145,15 @@ export default function PoolOpeningPage() {
                   <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
                     Phone <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
+                  <input type="tel" id="phone" name="phone" required
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="(812) 555-1234"
-                  />
+                    placeholder="(812) 555-1234" />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                  <input type="email" id="email" name="email"
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="john@example.com"
-                  />
+                    placeholder="john@example.com" />
                 </div>
               </div>
 
@@ -165,69 +162,104 @@ export default function PoolOpeningPage() {
                 <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-2">
                   Pool Address <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  required
+                <input type="text" id="address" name="address" required
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                  placeholder="123 Main Street"
-                />
+                  placeholder="123 Main Street" />
               </div>
 
-              {/* City, State, Zip */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="col-span-2">
-                  <label htmlFor="city" className="block text-sm font-medium text-slate-700 mb-2">City</label>
-                  <input type="text" id="city" name="city" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" placeholder="Terre Haute" />
-                </div>
-                <div>
-                  <label htmlFor="state" className="block text-sm font-medium text-slate-700 mb-2">State</label>
-                  <input type="text" id="state" name="state" maxLength={2} defaultValue="IN" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors uppercase" />
+              {/* City/State & Zip */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-2">
+                  <label htmlFor="city_state" className="block text-sm font-medium text-slate-700 mb-2">City, State</label>
+                  <input type="text" id="city_state" name="city_state"
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                    placeholder="Terre Haute, IN" />
                 </div>
                 <div>
                   <label htmlFor="zip" className="block text-sm font-medium text-slate-700 mb-2">Zip</label>
-                  <input type="text" id="zip" name="zip" maxLength={10} className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" placeholder="47804" />
+                  <input type="text" id="zip" name="zip" maxLength={10}
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                    placeholder="47804" />
                 </div>
               </div>
 
-              {/* Pool Type & Cover Type */}
+              {/* Pool Type */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">
+                  Pool Type <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button type="button" onClick={() => { setPoolType('inground'); }}
+                    className={`p-4 rounded-xl border-2 text-left transition-all ${
+                      poolType === 'inground'
+                        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+                        : 'border-slate-200 hover:border-slate-300'
+                    }`}>
+                    <div className="font-semibold text-slate-900">Inground</div>
+                    <div className="text-xs text-slate-500 mt-1">Vinyl liner, fiberglass, concrete</div>
+                  </button>
+                  <button type="button" onClick={() => { setPoolType('aboveground'); }}
+                    className={`p-4 rounded-xl border-2 text-left transition-all ${
+                      poolType === 'aboveground'
+                        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+                        : 'border-slate-200 hover:border-slate-300'
+                    }`}>
+                    <div className="font-semibold text-slate-900">Above Ground</div>
+                    <div className="text-xs text-slate-500 mt-1">Steel wall, resin frame</div>
+                  </button>
+                </div>
+                <input type="hidden" name="pool_type" value={poolType} />
+              </div>
+
+              {/* Size & Cover */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="pool_type" className="block text-sm font-medium text-slate-700 mb-2">Pool Type</label>
-                  <select id="pool_type" name="pool_type" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white">
-                    <option value="">Select...</option>
-                    <option value="Inground Vinyl">Inground Vinyl Liner</option>
-                    <option value="Inground Fiberglass">Inground Fiberglass</option>
-                    <option value="Above Ground">Above Ground</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  <label htmlFor="pool_size" className="block text-sm font-medium text-slate-700 mb-2">Approx. Pool Size</label>
+                  <input type="text" id="pool_size" name="pool_size"
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                    placeholder="e.g. 16x32, 24' Round" />
                 </div>
                 <div>
-                  <label htmlFor="cover_type" className="block text-sm font-medium text-slate-700 mb-2">Cover Type</label>
-                  <select id="cover_type" name="cover_type" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white">
-                    <option value="">Select...</option>
-                    <option value="Solid Winter Cover">Solid Winter Cover</option>
-                    <option value="Mesh Winter Cover">Mesh Winter Cover</option>
-                    <option value="Automatic Cover">Automatic Cover</option>
-                    <option value="No Cover">No Cover</option>
-                    <option value="Other">Other</option>
+                  <label htmlFor="cover_type" className="block text-sm font-medium text-slate-700 mb-2">Type of Winter Cover</label>
+                  <select id="cover_type" name="cover_type"
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white"
+                    disabled={!poolType}>
+                    <option value="">{poolType ? '— Select cover type —' : '— Select pool type first —'}</option>
+                    {coverOptions.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               {/* Preferred Week */}
               <div>
-                <label htmlFor="preferred_week" className="block text-sm font-medium text-slate-700 mb-2">
-                  Preferred Opening Week
+                <label htmlFor="week_select" className="block text-sm font-medium text-slate-700 mb-2">
+                  Preferred Opening Week <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="week"
-                  id="preferred_week"
-                  name="preferred_week"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                />
-                <p className="mt-1.5 text-xs text-slate-400">We&apos;ll do our best to accommodate your preferred timing. Openings are first-come, first-served.</p>
+                {weeksLoading ? (
+                  <div className="px-4 py-3 rounded-lg border border-slate-200 text-slate-400 text-sm">Loading available weeks...</div>
+                ) : weeks.filter(w => w.available).length === 0 ? (
+                  <div className="px-4 py-3 rounded-lg border border-amber-200 bg-amber-50 text-amber-700 text-sm">
+                    All weeks are currently full. Please call us at <a href="tel:8122321292" className="font-semibold underline">(812) 232-1292</a> to be added to the waitlist.
+                  </div>
+                ) : (
+                  <select id="week_select"
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white"
+                    value={selectedWeek?.week_id || ''}
+                    onChange={(e) => {
+                      const w = weeks.find(wk => wk.week_id === e.target.value);
+                      setSelectedWeek(w || null);
+                    }}>
+                    <option value="">— Select a week —</option>
+                    {weeks.map((w) => (
+                      <option key={w.week_id} value={w.week_id} disabled={!w.available}>
+                        {w.label}{w.spots_label ? ` (${w.spots_label})` : ''}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                <p className="mt-1.5 text-xs text-slate-400">Openings are first-come, first-served. We&apos;ll confirm your date.</p>
               </div>
 
               {/* Notes */}
@@ -235,21 +267,14 @@ export default function PoolOpeningPage() {
                 <label htmlFor="notes" className="block text-sm font-medium text-slate-700 mb-2">
                   Anything else we should know?
                 </label>
-                <textarea
-                  id="notes"
-                  name="notes"
-                  rows={3}
+                <textarea id="notes" name="notes" rows={3}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none"
-                  placeholder="Gate code, equipment issues, special instructions..."
-                />
+                  placeholder="Gate code, equipment issues, special instructions..." />
               </div>
 
               {/* Submit */}
-              <button
-                type="submit"
-                disabled={isPending}
-                className="w-full btn-pill btn-pill-primary text-lg shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed gap-2"
-              >
+              <button type="submit" disabled={isPending}
+                className="w-full btn-pill btn-pill-primary text-lg shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed gap-2">
                 {isPending ? (
                   <>
                     <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
