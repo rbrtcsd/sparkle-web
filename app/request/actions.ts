@@ -19,7 +19,6 @@ export async function submitServiceRequest(
   const state = formData.get('state') as string;
   const zip = formData.get('zip') as string;
   const description = formData.get('description') as string;
-  const priority = formData.get('priority') as string;
 
   // Validation
   if (!name || !phone || !description) {
@@ -41,7 +40,7 @@ export async function submitServiceRequest(
       email: email || null,
       address: fullAddress || null,
       description: description,
-      priority: priority || 'standard',
+      priority: 'Standard',
       status: 'new',
       source: 'website',
     });

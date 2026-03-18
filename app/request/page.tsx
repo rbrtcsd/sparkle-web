@@ -189,21 +189,6 @@ export default function RequestPage() {
                 </div>
               </div>
 
-              {/* Priority */}
-              <div>
-                <label htmlFor="priority" className="block text-sm font-medium text-slate-700 mb-2">
-                  Priority
-                </label>
-                <select
-                  id="priority"
-                  name="priority"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white"
-                >
-                  <option value="standard">Standard</option>
-                  <option value="urgent">Urgent</option>
-                </select>
-              </div>
-
               {/* Description */}
               <div>
                 <label htmlFor="description" className="block text-sm font-medium text-slate-700 mb-2">
