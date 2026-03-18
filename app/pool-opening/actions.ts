@@ -235,6 +235,21 @@ export async function submitPoolOpening(
       return { success: false, error: 'Something went wrong. Please try again or call us at (812) 232-1292.' };
     }
 
+    // Alert managers if customer couldn't be matched (needs manual review)
+    if (!custId) {
+      await supabase.from('notifications').insert({
+        type: 'customer_review',
+        title: 'Pool Opening — Customer Needs Review',
+        message: `${name} at ${address} submitted a pool opening online but couldn't be matched to an existing customer. The address may belong to a different name in the system. Please review and link or create the customer record.`,
+        data: {
+          customer_name: name,
+          customer_address: address,
+          phone: phone,
+          source: 'pool_opening_website',
+        },
+      }).then(() => {}).catch(() => {}); // non-blocking
+    }
+
     return { success: true, error: null };
   } catch (err) {
     console.error('Pool opening submission error:', err);
