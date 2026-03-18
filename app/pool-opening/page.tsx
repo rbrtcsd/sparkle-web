@@ -1,0 +1,271 @@
+'use client';
+
+import { useActionState } from 'react';
+import { submitPoolOpening, type OpeningFormState } from './actions';
+import Link from 'next/link';
+
+const initialState: OpeningFormState = { success: false, error: null };
+
+export default function PoolOpeningPage() {
+  const [state, formAction, isPending] = useActionState(submitPoolOpening, initialState);
+
+  if (state.success) {
+    return (
+      <>
+        <section className="hero-gradient pt-32 pb-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl">
+              <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+                You&apos;re On the List!
+              </h1>
+            </div>
+          </div>
+        </section>
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
+            <div className="w-20 h-20 rounded-full bg-green/10 text-green flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">
+              Pool opening scheduled!
+            </h2>
+            <p className="text-lg text-slate-500 leading-relaxed mb-8">
+              We&apos;ve received your pool opening request. Our team will reach out to confirm your appointment.
+              Openings are scheduled on a first-come, first-served basis, and we&apos;ll do our best to accommodate
+              your preferred timing.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
+              >
+                Back to Home
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition-colors"
+              >
+                View Our Services
+              </Link>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {/* Header */}
+      <section className="hero-gradient pt-36 pb-24 relative overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold text-teal-300 uppercase tracking-[0.2em] mb-4">Seasonal Service</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+              Schedule a Pool Opening
+            </h1>
+            <p className="mt-6 text-lg text-blue-100/90 leading-relaxed">
+              Ready to kick off swim season? Fill out the form below and we&apos;ll get you on the schedule.
+              Openings are booked on a first-come, first-served basis &mdash; so the earlier you sign up, the sooner you swim!
+            </p>
+          </div>
+        </div>
+        <div className="wave-divider">
+          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 80L60 72C120 64 240 48 360 40C480 32 600 32 720 36C840 40 960 48 1080 52C1200 56 1320 56 1380 56L1440 56V80H0Z" fill="#f8fafc"/>
+          </svg>
+        </div>
+      </section>
+
+      {/* What's Included */}
+      <section className="py-16 bg-slate-50">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-10 mb-10">
+            <h2 className="text-xl font-bold text-slate-900 mb-4">What&apos;s included in a pool opening?</h2>
+            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
+              {[
+                'Remove and fold winter cover',
+                'Install ladder, rails, and accessories',
+                'Reinstall pump, filter, and equipment',
+                'Fill pool to proper water level',
+                'Start up and inspect all equipment',
+                'Initial chemical treatment and balancing',
+                'Vacuum and skim as needed',
+                'Full system check and walkthrough',
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-green mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span className="text-sm text-slate-600">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Form */}
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-10">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">Your Information</h2>
+
+            {state.error && (
+              <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-100 text-red-700 text-sm">
+                {state.error}
+              </div>
+            )}
+
+            <form action={formAction} className="space-y-6">
+              {/* Name */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  placeholder="John Smith"
+                />
+              </div>
+
+              {/* Phone & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
+                    Phone <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                    placeholder="(812) 555-1234"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                    placeholder="john@example.com"
+                  />
+                </div>
+              </div>
+
+              {/* Address */}
+              <div>
+                <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-2">
+                  Pool Address <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  placeholder="123 Main Street"
+                />
+              </div>
+
+              {/* City, State, Zip */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="col-span-2">
+                  <label htmlFor="city" className="block text-sm font-medium text-slate-700 mb-2">City</label>
+                  <input type="text" id="city" name="city" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" placeholder="Terre Haute" />
+                </div>
+                <div>
+                  <label htmlFor="state" className="block text-sm font-medium text-slate-700 mb-2">State</label>
+                  <input type="text" id="state" name="state" maxLength={2} defaultValue="IN" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors uppercase" />
+                </div>
+                <div>
+                  <label htmlFor="zip" className="block text-sm font-medium text-slate-700 mb-2">Zip</label>
+                  <input type="text" id="zip" name="zip" maxLength={10} className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" placeholder="47804" />
+                </div>
+              </div>
+
+              {/* Pool Type & Cover Type */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="pool_type" className="block text-sm font-medium text-slate-700 mb-2">Pool Type</label>
+                  <select id="pool_type" name="pool_type" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white">
+                    <option value="">Select...</option>
+                    <option value="Inground Vinyl">Inground Vinyl Liner</option>
+                    <option value="Inground Fiberglass">Inground Fiberglass</option>
+                    <option value="Above Ground">Above Ground</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="cover_type" className="block text-sm font-medium text-slate-700 mb-2">Cover Type</label>
+                  <select id="cover_type" name="cover_type" className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white">
+                    <option value="">Select...</option>
+                    <option value="Solid Winter Cover">Solid Winter Cover</option>
+                    <option value="Mesh Winter Cover">Mesh Winter Cover</option>
+                    <option value="Automatic Cover">Automatic Cover</option>
+                    <option value="No Cover">No Cover</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Preferred Week */}
+              <div>
+                <label htmlFor="preferred_week" className="block text-sm font-medium text-slate-700 mb-2">
+                  Preferred Opening Week
+                </label>
+                <input
+                  type="week"
+                  id="preferred_week"
+                  name="preferred_week"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                />
+                <p className="mt-1.5 text-xs text-slate-400">We&apos;ll do our best to accommodate your preferred timing. Openings are first-come, first-served.</p>
+              </div>
+
+              {/* Notes */}
+              <div>
+                <label htmlFor="notes" className="block text-sm font-medium text-slate-700 mb-2">
+                  Anything else we should know?
+                </label>
+                <textarea
+                  id="notes"
+                  name="notes"
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none"
+                  placeholder="Gate code, equipment issues, special instructions..."
+                />
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={isPending}
+                className="w-full btn-pill btn-pill-primary text-lg shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed gap-2"
+              >
+                {isPending ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Submitting...
+                  </>
+                ) : (
+                  'Schedule My Pool Opening'
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
