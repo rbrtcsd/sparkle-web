@@ -6,6 +6,7 @@
   --color-primary-dark: #0e3d72;
   --color-teal: #0097a7;
   --color-green: #2e7d32;
+  --color-gold: #c9a84c;
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;
   --color-slate-200: #e2e8f0;
@@ -50,7 +51,54 @@ body {
 .animate-delay-300 { animation-delay: 0.3s; }
 .animate-delay-400 { animation-delay: 0.4s; }
 
-/* Hero gradient overlay */
+/* Hero gradient overlay — luxurious deep blue */
 .hero-gradient {
-  background: linear-gradient(135deg, #0e3d72 0%, #1b5fa8 50%, #0097a7 100%);
+  background: linear-gradient(135deg, #071e3d 0%, #0e3d72 30%, #1b5fa8 60%, #0c7c8a 100%);
+}
+
+/* Wave divider */
+.wave-divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 0;
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(27, 95, 168, 0.15);
+}
+
+/* Pill button */
+.btn-pill {
+  border-radius: 9999px;
+  padding: 0.875rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-pill-primary {
+  background: #1b5fa8;
+  color: white;
+}
+.btn-pill-primary:hover {
+  background: #0e3d72;
+  box-shadow: 0 8px 24px -4px rgba(27, 95, 168, 0.4);
+}
+.btn-pill-outline {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+.btn-pill-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
 }

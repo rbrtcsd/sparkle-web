@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: '%s | Sparkle Pools',
   },
   description:
-    'Your trusted pool experts. Professional pool openings, closings, repairs, maintenance, and renovation services.',
+    'Terre Haute\'s trusted pool experts. Inground pools, fiberglass pools, above ground pools, service, repair, and maintenance across the Wabash Valley.',
 };
 
 export default function RootLayout({

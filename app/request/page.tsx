@@ -59,23 +59,27 @@ export default function RequestPage() {
   return (
     <>
       {/* Header */}
-      <section className="hero-gradient pt-32 pb-20">
+      <section className="hero-gradient pt-36 pb-24 relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold text-teal-300 uppercase tracking-wider mb-3">Get In Touch</p>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
-              Request a Service
+            <p className="text-sm font-semibold text-teal-300 uppercase tracking-[0.2em] mb-4">Get In Touch</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+              Request Service
             </h1>
-            <p className="mt-6 text-lg text-blue-100 leading-relaxed">
-              Fill out the form below and we will get back to you promptly. For urgent issues,
-              please call us directly at (555) 123-4567.
+            <p className="mt-6 text-lg text-blue-100/90 leading-relaxed">
+              Tell us what you need and we&apos;ll get back to you within one business day. Whether it&apos;s a new pool, a repair, or just a question &mdash; we&apos;re here to help.
             </p>
           </div>
+        </div>
+        <div className="wave-divider">
+          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 80L60 72C120 64 240 48 360 40C480 32 600 32 720 36C840 40 960 48 1080 52C1200 56 1320 56 1380 56L1440 56V80H0Z" fill="#f8fafc"/>
+          </svg>
         </div>
       </section>
 
       {/* Form */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-24 bg-slate-50">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-10">
             {state.error && (
@@ -219,7 +223,7 @@ export default function RequestPage() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full px-8 py-4 rounded-xl bg-primary text-white font-semibold text-lg hover:bg-primary-dark transition-all duration-200 shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full btn-pill btn-pill-primary text-lg shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed gap-2"
               >
                 {isPending ? (
                   <>

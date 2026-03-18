@@ -69,7 +69,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/request"
-              className={`ml-4 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`ml-4 px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
                 scrolled
                   ? 'bg-primary text-white hover:bg-primary-dark shadow-sm'
                   : 'bg-white text-primary hover:bg-white/90 shadow-sm'
@@ -125,7 +125,7 @@ export default function Navbar() {
             <Link
               href="/request"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center px-5 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
+              className="block w-full text-center px-5 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
             >
               Request Service
             </Link>
