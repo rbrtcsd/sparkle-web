@@ -83,9 +83,9 @@ export default function Navbar() {
             <Image
               src="/sparkle-logo.svg"
               alt="Sparkle Pools"
-              width={160}
-              height={48}
-              className={`h-10 w-auto transition-all duration-300 ${
+              width={200}
+              height={60}
+              className={`h-12 sm:h-14 w-auto transition-all duration-300 ${
                 scrolled ? '' : 'brightness-0 invert'
               }`}
               priority
