@@ -17,7 +17,7 @@ const poolsDropdown = [
 
 const navLinksAfter = [
   { href: '/pool-opening', label: 'Pool Openings' },
-  { href: '/request', label: 'Request Service' },
+  { href: '/request', label: 'Request a Quote' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -153,7 +153,7 @@ export default function Navbar() {
                   : 'bg-white text-primary hover:bg-white/90 shadow-sm'
               }`}
             >
-              Request Service
+              Get a Quote
             </Link>
           </div>
 
@@ -241,7 +241,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="block w-full text-center px-5 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
             >
-              Request Service
+              Get a Quote
             </Link>
           </div>
         </div>

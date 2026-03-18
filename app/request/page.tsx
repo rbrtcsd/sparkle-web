@@ -64,10 +64,10 @@ export default function RequestPage() {
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-teal-300 uppercase tracking-[0.2em] mb-4">Get In Touch</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-              Request Service
+              Request Service or Quote
             </h1>
             <p className="mt-6 text-lg text-blue-100/90 leading-relaxed">
-              Tell us what you need and we&apos;ll get back to you within one business day. Whether it&apos;s a new pool, a repair, or just a question &mdash; we&apos;re here to help.
+              Need a repair, a quote on a new pool, or just have a question? Fill out the form below and we&apos;ll get back to you within one business day.
             </p>
           </div>
         </div>

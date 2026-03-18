@@ -122,7 +122,7 @@ export default function Home() {
                 href="/request"
                 className="btn-pill btn-pill-primary px-10 py-4 text-lg shadow-lg shadow-primary-dark/30"
               >
-                Request Service
+                Get a Free Quote
                 <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
@@ -253,14 +253,14 @@ export default function Home() {
             Ready to Get Started?
           </h2>
           <p className="mt-6 text-lg text-blue-100/90 max-w-2xl mx-auto leading-relaxed">
-            Whether you need a new pool, a repair, or ongoing maintenance &mdash; we are here to help. Request a service today and let us take care of your pool.
+            Whether you need a new pool, a repair, or ongoing maintenance &mdash; we&apos;re here to help.
           </p>
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/request"
               className="btn-pill bg-white text-primary px-10 py-4 text-lg hover:bg-blue-50 shadow-lg"
             >
-              Request Service
+              Get a Free Quote
             </Link>
             <Link
               href="/contact"
