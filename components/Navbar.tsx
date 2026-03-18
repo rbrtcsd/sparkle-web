@@ -20,6 +20,7 @@ const poolsDropdown = [
 
 const navLinksAfter = [
   { href: '/pool-opening', label: 'Pool Openings' },
+  { href: '/careers', label: 'Careers' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
