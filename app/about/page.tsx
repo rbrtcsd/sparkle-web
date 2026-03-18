@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about Sparkle Pools — the Wabash Valley\'s trusted pool experts for over a decade. Authorized dealer for Latham, Merlin, Coverstar, and Raypak.',
+  description: 'Learn about Sparkle Pools — the Wabash Valley\'s trusted pool experts for over a decade. Authorized dealer for Latham, Merlin, Coverstar, Raypak, Pentair, Hayward, and more.',
 };
 
 const values = [
@@ -50,6 +50,12 @@ const partners = [
   { name: 'Merlin Industries', description: 'Premium vinyl liners & safety covers' },
   { name: 'Coverstar', description: 'Automatic safety covers' },
   { name: 'Raypak', description: 'Gas heaters & heat pumps' },
+  { name: 'Pentair', description: 'Pumps, filters, automation & water care' },
+  { name: 'Hayward', description: 'Pool equipment, cleaners & lighting' },
+  { name: 'Maytronics', description: 'Dolphin robotic pool cleaners' },
+  { name: 'Aiper', description: 'Cordless robotic pool cleaners' },
+  { name: 'Jonas', description: 'Pool construction products & accessories' },
+  { name: 'Waterway', description: 'Pumps, fittings & plumbing components' },
 ];
 
 export default function AboutPage() {
@@ -152,7 +158,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {partners.map((partner) => (
               <div
                 key={partner.name}
