@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const services = [
   {
     title: 'Inground Vinyl Liner Pools',
     description: 'Custom-designed pools with premium Merlin vinyl liners and Latham steel walls. Endless shapes, sizes, and liner patterns to match your vision.',
+    image: '/images/steel-walls.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
@@ -13,6 +15,7 @@ const services = [
   {
     title: 'Fiberglass Pools',
     description: 'Factory-built Latham fiberglass pools installed in days, not months. Durable, low-maintenance, and beautiful.',
+    image: '/images/fiberglass-pool-1.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
@@ -22,6 +25,7 @@ const services = [
   {
     title: 'Above Ground Pools',
     description: 'Quality above ground options including the Nova STR steel and Revelle hybrid models. Perfect for any budget.',
+    image: '/images/nova-str.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -31,6 +35,7 @@ const services = [
   {
     title: 'Pool Service & Repair',
     description: 'Equipment repair, liner replacement, plumbing, and more. We service all makes and models to keep your pool running perfectly.',
+    image: '/images/fiberglass-pool-2.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384-3.067A.75.75 0 005.25 12.6v6.8a.75.75 0 00.786.5l5.384-.652m0-4.08l5.384 3.067a.75.75 0 00.786-.5v-6.8a.75.75 0 00-.786-.5l-5.384.652m0 4.08V9.927m0 0a.75.75 0 00-.786-.5L5.25 10.079a.75.75 0 00-.786.5M11.42 9.927a.75.75 0 01.786-.5l5.384.652a.75.75 0 01.786.5" />
@@ -40,6 +45,7 @@ const services = [
   {
     title: 'Automatic Safety Covers',
     description: 'Coverstar automatic pool covers for safety, energy savings, and convenience. Protect your family and reduce maintenance.',
+    image: '/images/coverstar-safety.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -49,6 +55,7 @@ const services = [
   {
     title: 'Heating & Equipment',
     description: 'Raypak gas heaters and CrosswindV heat pumps for season-extending comfort. Professional installation and service.',
+    image: '/images/raypak-gas-heater.png',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 6.51 6.51 0 009 11.25a3 3 0 10 6 0c0-1.39-.45-2.672-1.21-3.713.885-.544 1.834-.946 2.842-1.185.39-.093.756-.21 1.094-.348z" />
@@ -93,18 +100,17 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative hero-gradient min-h-[92vh] flex items-center overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-[0.07]">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hero-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                <circle cx="30" cy="30" r="1.5" fill="white" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hero-pattern)" />
-          </svg>
-        </div>
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+        {/* Background image */}
+        <Image
+          src="/images/fiberglass-pool-aerial.jpg"
+          alt="Aerial view of a beautiful fiberglass pool"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-blue-900/70 to-primary/60" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
           <div className="max-w-3xl">
@@ -162,17 +168,22 @@ export default function Home() {
             {services.map((service) => (
               <div
                 key={service.title}
-                className="card-hover group p-8 rounded-2xl border border-slate-100 bg-white shadow-lg shadow-slate-100/50"
+                className="card-hover group bg-white rounded-2xl border border-slate-100 shadow-lg shadow-slate-100/50 overflow-hidden"
               >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                  {service.icon}
+                <div className="relative h-48 sm:h-56">
+                  <Image src={service.image} alt={service.title} fill className="object-cover" />
                 </div>
-                <h3 className="mt-6 text-lg font-bold text-slate-900">
-                  {service.title}
-                </h3>
-                <p className="mt-3 text-sm text-slate-500 leading-relaxed">
-                  {service.description}
-                </p>
+                <div className="p-6 sm:p-8">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    {service.icon}
+                  </div>
+                  <h3 className="mt-6 text-lg font-bold text-slate-900">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-slate-500 leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

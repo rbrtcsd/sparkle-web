@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Inground Pools',
@@ -29,6 +30,21 @@ export default function IngroundPoolsPage() {
         </div>
       </section>
 
+      {/* Feature Image */}
+      <section className="bg-white pt-16 pb-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative h-64 sm:h-80 lg:h-[28rem] rounded-2xl overflow-hidden shadow-xl">
+            <Image
+              src="/images/fiberglass-pool-aerial.jpg"
+              alt="Aerial view of a completed inground pool installation"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Vinyl Liner Pools */}
       <section className="py-24 sm:py-32 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -41,6 +57,14 @@ export default function IngroundPoolsPage() {
               <p className="mt-5 text-lg text-slate-500 leading-relaxed">
                 We build custom inground vinyl liner pools using Latham steel and polymer wall systems &mdash; fully tailored to your yard, your style, and your budget.
               </p>
+              <div className="mt-8 relative h-56 sm:h-64 rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src="/images/steel-walls.jpg"
+                  alt="Latham steel pool walls during construction"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
             <div className="mt-10 lg:mt-0">
               <ul className="space-y-5">
@@ -112,6 +136,14 @@ export default function IngroundPoolsPage() {
               <p className="mt-5 text-lg text-slate-500 leading-relaxed">
                 Latham fiberglass pools with Advanced Composite construction &mdash; factory-built and delivered ready to install for the fastest path to your new pool.
               </p>
+              <div className="mt-8 relative h-56 sm:h-64 rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src="/images/fiberglass-pool-1.jpg"
+                  alt="Latham fiberglass pool installation"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
             <div className="mt-10 lg:mt-0">
               <ul className="space-y-5">

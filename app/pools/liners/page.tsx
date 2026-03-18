@@ -1,10 +1,26 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Vinyl Pool Liners',
   description: 'Authorized Merlin Industries dealer. Premium vinyl pool liners in dozens of patterns and colors. Liner replacement for all inground vinyl pools.',
 };
+
+const linerPatterns = [
+  {
+    name: 'Blue Quartz',
+    image: '/images/liner-blue-quartz.jpg',
+  },
+  {
+    name: 'Island Granite',
+    image: '/images/liner-island-granite.jpg',
+  },
+  {
+    name: 'Lake Como',
+    image: '/images/liner-lake-como.jpg',
+  },
+];
 
 const collections = [
   {
@@ -53,6 +69,37 @@ export default function LinersPage() {
           <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
             <path d="M0 80L60 72C120 64 240 48 360 40C480 32 600 32 720 36C840 40 960 48 1080 52C1200 56 1320 56 1380 56L1440 56V80H0Z" fill="white"/>
           </svg>
+        </div>
+      </section>
+
+      {/* Liner Pattern Gallery */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">See the Difference</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+              Featured Liner Patterns
+            </h2>
+            <p className="mt-5 text-lg text-slate-500 leading-relaxed">
+              Here are just a few of the stunning patterns available from Merlin Industries. Visit our showroom to see the full selection.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {linerPatterns.map((pattern) => (
+              <div
+                key={pattern.name}
+                className="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="relative h-56 sm:h-64">
+                  <Image src={pattern.image} alt={`${pattern.name} liner pattern`} fill className="object-cover" />
+                </div>
+                <div className="p-5 text-center">
+                  <h3 className="text-lg font-bold text-slate-900">{pattern.name}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

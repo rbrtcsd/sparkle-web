@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Above Ground Pools',
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 const products = [
   {
     name: 'Nova STR Steel Pool',
+    image: '/images/nova-str.jpg',
     features: [
       'All-steel construction built to last',
       'Clean, modern look that complements any backyard',
@@ -23,6 +25,7 @@ const products = [
   },
   {
     name: 'Revelle Hybrid Pool',
+    image: '/images/revelle.jpg',
     features: [
       'Hybrid steel and resin construction',
       'Premium aesthetics with enhanced durability',
@@ -97,26 +100,31 @@ export default function AboveGroundPoolsPage() {
             {products.map((product) => (
               <div
                 key={product.name}
-                className="card-hover group p-8 rounded-2xl border border-slate-100 bg-white shadow-lg shadow-slate-100/50"
+                className="card-hover group bg-white rounded-2xl border border-slate-100 shadow-lg shadow-slate-100/50 overflow-hidden"
               >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                  {product.icon}
+                <div className="relative h-48 sm:h-56">
+                  <Image src={product.image} alt={product.name} fill className="object-cover" />
                 </div>
-                <h3 className="mt-6 text-xl font-bold text-slate-900">
-                  {product.name}
-                </h3>
-                <ul className="mt-4 space-y-3">
-                  {product.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                      </div>
-                      <p className="text-slate-500 leading-relaxed">{feature}</p>
-                    </li>
-                  ))}
-                </ul>
+                <div className="p-6 sm:p-8">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    {product.icon}
+                  </div>
+                  <h3 className="mt-6 text-xl font-bold text-slate-900">
+                    {product.name}
+                  </h3>
+                  <ul className="mt-4 space-y-3">
+                    {product.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                          </svg>
+                        </div>
+                        <p className="text-slate-500 leading-relaxed">{feature}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
