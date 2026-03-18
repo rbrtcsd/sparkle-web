@@ -121,37 +121,51 @@ export async function submitPoolOpening(
     }
 
     // ── Customer matching (server-side only, no data exposed to browser) ──
-    // 1. Try matching by phone (digits only, most reliable)
-    const digits = phone.replace(/\D/g, '');
+    // Strategy: address is the anchor (pools don't move), last name confirms the household
+    const lastName = name.trim().split(/\s+/).pop()?.toLowerCase() || '';
+    const addrNormalized = address.trim().toLowerCase().replace(/[.,#]/g, '').replace(/\s+/g, ' ');
     let custId: string | null = null;
 
-    if (digits.length >= 7) {
-      const { data: phoneMatches } = await supabase
-        .from('customers')
-        .select('customer_id, name, phone')
-        .or(`phone.ilike.%${digits.slice(-7)}%`)
-        .limit(5);
+    // 1. Search customers by address (fuzzy match on street address)
+    if (addrNormalized.length >= 5) {
+      // Extract the street number + first word of street name for a targeted search
+      const addrParts = addrNormalized.split(' ');
+      const addrSearch = addrParts.slice(0, Math.min(3, addrParts.length)).join(' ');
 
-      if (phoneMatches?.length) {
-        // Exact digit match preferred, then first result
-        const exact = phoneMatches.find(c => (c.phone || '').replace(/\D/g, '') === digits);
-        custId = exact?.customer_id || phoneMatches[0].customer_id;
+      const { data: addrMatches } = await supabase
+        .from('customers')
+        .select('customer_id, name, address')
+        .ilike('address', `%${addrSearch}%`)
+        .limit(10);
+
+      if (addrMatches?.length) {
+        // Address matched — check if last name matches any result (same household)
+        const lastNameMatch = addrMatches.find(c => {
+          const custLastName = (c.name || '').trim().split(/\s+/).pop()?.toLowerCase() || '';
+          return custLastName === lastName;
+        });
+
+        if (lastNameMatch) {
+          // Address + last name match = same household, confident match
+          custId = lastNameMatch.customer_id;
+        }
+        // Address match but different last name = possibly new owner, don't match
       }
     }
 
-    // 2. If no phone match, try name match
+    // 2. If no address match, try exact name match as a fallback
     if (!custId) {
       const { data: nameMatches } = await supabase
         .from('customers')
         .select('customer_id')
-        .ilike('name', name)
+        .ilike('name', name.trim())
         .limit(1);
       if (nameMatches?.length) {
         custId = nameMatches[0].customer_id;
       }
     }
 
-    // 3. If still no match, create a new customer
+    // 3. No match found — create a new customer
     if (!custId) {
       const cs = (cityState || '').split(',').map(s => s.trim());
       const { data: newCust } = await supabase
