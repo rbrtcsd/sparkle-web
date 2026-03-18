@@ -120,7 +120,61 @@ export async function submitPoolOpening(
       }
     }
 
+    // ── Customer matching (server-side only, no data exposed to browser) ──
+    // 1. Try matching by phone (digits only, most reliable)
+    const digits = phone.replace(/\D/g, '');
+    let custId: string | null = null;
+
+    if (digits.length >= 7) {
+      const { data: phoneMatches } = await supabase
+        .from('customers')
+        .select('customer_id, name, phone')
+        .or(`phone.ilike.%${digits.slice(-7)}%`)
+        .limit(5);
+
+      if (phoneMatches?.length) {
+        // Exact digit match preferred, then first result
+        const exact = phoneMatches.find(c => (c.phone || '').replace(/\D/g, '') === digits);
+        custId = exact?.customer_id || phoneMatches[0].customer_id;
+      }
+    }
+
+    // 2. If no phone match, try name match
+    if (!custId) {
+      const { data: nameMatches } = await supabase
+        .from('customers')
+        .select('customer_id')
+        .ilike('name', name)
+        .limit(1);
+      if (nameMatches?.length) {
+        custId = nameMatches[0].customer_id;
+      }
+    }
+
+    // 3. If still no match, create a new customer
+    if (!custId) {
+      const cs = (cityState || '').split(',').map(s => s.trim());
+      const { data: newCust } = await supabase
+        .from('customers')
+        .insert({
+          name: name,
+          address: address,
+          city: cs[0] || null,
+          state: cs[1] || null,
+          zip: zip || null,
+          phone: phone,
+          email: email || null,
+          pool_type: poolType === 'inground' ? 'Inground' : poolType === 'aboveground' ? 'Above Ground' : null,
+          pool_size: poolSize || null,
+          cover_type: coverType || null,
+        })
+        .select('customer_id')
+        .single();
+      custId = newCust?.customer_id || null;
+    }
+
     const { error } = await supabase.from('pool_openings').insert({
+      customer_id: custId,
       customer_name: name,
       customer_address: address,
       week_id: weekId,
