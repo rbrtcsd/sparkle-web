@@ -247,7 +247,7 @@ export async function submitPoolOpening(
           phone: phone,
           source: 'pool_opening_website',
         },
-      }).then(() => {}).catch(() => {}); // non-blocking
+      }); // non-blocking
     }
 
     return { success: true, error: null };

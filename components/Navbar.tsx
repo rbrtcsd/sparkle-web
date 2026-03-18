@@ -11,8 +11,11 @@ const navLinks = [
 
 const poolsDropdown = [
   { href: '/pools/inground', label: 'Inground Pools' },
+  { href: '/pools/fiberglass', label: 'Fiberglass Pools' },
   { href: '/pools/above-ground', label: 'Above Ground Pools' },
   { href: '/pools/liners', label: 'Vinyl Liners' },
+  { href: '/pools/safety-covers', label: 'Safety Covers' },
+  { href: '/pools/heating', label: 'Heating' },
 ];
 
 const navLinksAfter = [

@@ -24,7 +24,7 @@ const services = [
     title: 'Fiberglass Pools',
     description:
       'Want a pool installed in days instead of months? Our Latham fiberglass pools feature Advanced Composite construction and Crystite Gel Coat finishes for unmatched durability. Choose from a wide range of shapes and sizes \u2014 from compact plunge pools to full-size family pools.',
-    link: '/pools/inground',
+    link: '/pools/fiberglass',
     image: '/images/fiberglass-pool-1.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -48,6 +48,7 @@ const services = [
     title: 'Automatic Safety Covers',
     description:
       'Protect your family and save on energy with a Coverstar automatic pool cover. One-touch operation, ASTM safety rated, and available in 10 colors. Models include the premium Eclipse, the reliable CS3000, and the sleek Atom. Covers can reduce heating and chemical costs by up to 60%.',
+    link: '/pools/safety-covers',
     image: '/images/coverstar-safety.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -59,6 +60,7 @@ const services = [
     title: 'Pool Heating',
     description:
       'Extend your swim season with professional heating solutions. We install and service Raypak Digital gas heaters (199k\u2013399k BTU) and Raypak CrosswindV heat pumps with efficiency ratings up to 6.1 COP. Heat & chill models available.',
+    link: '/pools/heating',
     image: '/images/raypak-gas-heater.png',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -70,6 +72,7 @@ const services = [
     title: 'Pool Service & Maintenance',
     description:
       'Keep your pool crystal clear all season. We offer weekly maintenance plans, opening and closing services, water chemistry testing and balancing, and equipment inspections. One less thing to worry about.',
+    link: '/services/maintenance',
     image: '/images/fiberglass-pool-2.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -81,6 +84,7 @@ const services = [
     title: 'Equipment Repair & Installation',
     description:
       'Pumps, filters, heaters, salt systems, lighting, plumbing \u2014 we repair and install it all. Our technicians are factory-trained on all major brands. Fast diagnosis, quality parts, honest pricing.',
+    link: '/services/maintenance',
     image: '/images/raypak-crosswind.png',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -92,6 +96,7 @@ const services = [
     title: 'Water Hauling',
     description:
       'Need water fast? We provide bulk water delivery for pool fills, top-offs, and emergency needs across the Wabash Valley. Save time and protect your well.',
+    link: '/request',
     image: '/images/fiberglass-pool-aerial.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
