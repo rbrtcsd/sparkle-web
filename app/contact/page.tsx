@@ -29,7 +29,7 @@ const locations = [
       { day: 'Wednesday', time: 'Closed' },
       { day: 'Thursday', time: '11:00 AM \u2013 6:00 PM' },
       { day: 'Friday', time: '11:00 AM \u2013 6:00 PM' },
-      { day: 'Saturday', time: '9:00 AM \u2013 4:00 PM' },
+      { day: 'Saturday', time: '9:00 AM \u2013 3:00 PM' },
       { day: 'Sunday', time: '10:00 AM \u2013 2:00 PM' },
     ],
   },

@@ -92,7 +92,7 @@ export default function Footer() {
               <div>
                 <p className="text-white font-semibold text-xs uppercase tracking-wider mb-1">South</p>
                 <p>5171 S US Highway 41<br />Terre Haute, IN 47802</p>
-                <p className="text-slate-500 mt-1">Mon, Thu&ndash;Fri 11&ndash;6 &middot; Sat 9&ndash;4 &middot; Sun 10&ndash;2</p>
+                <p className="text-slate-500 mt-1">Mon, Thu&ndash;Fri 11&ndash;6 &middot; Sat 9&ndash;3 &middot; Sun 10&ndash;2</p>
               </div>
               <a href="tel:8122321292" className="inline-flex items-center gap-2 hover:text-white transition-colors mt-2">
                 <svg className="w-4 h-4 text-primary-light shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
