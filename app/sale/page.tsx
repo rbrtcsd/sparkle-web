@@ -86,8 +86,8 @@ export default function SalePage() {
                 <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Above Ground Pools</h3>
                 <h4 className="text-xl font-bold text-teal-700 mt-2">Free Water Hauling Included**</h4>
                 <p className="text-slate-600 mt-3 leading-relaxed">
-                  Purchase an above ground pool during sale week and we&apos;ll haul the water to fill it &mdash; free.
-                  Water hauling is typically an additional charge, but this week it&apos;s included. We&apos;ll deliver to the nearest 6,000 gallons &mdash; you top it off with a hose.
+                  Purchase an above ground pool during sale week and we&apos;ll fill it for you &mdash; completely free.
+                  Water hauling is typically an additional charge, but this week it&apos;s included with every above ground pool purchase.**
                 </p>
                 <Link href="/pools/above-ground" className="inline-flex items-center gap-2 text-teal-700 font-semibold mt-4 hover:text-teal-900">
                   View Above Ground Pools &rarr;
