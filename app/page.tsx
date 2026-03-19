@@ -58,9 +58,9 @@ const services = [
     ),
   },
   {
-    title: 'Heating & Equipment',
-    description: 'Raypak gas heaters and CrosswindV heat pumps for season-extending comfort. Professional installation and service.',
-    image: '/images/raypak-gas-heater.png',
+    title: 'Pumps, Heaters, & Equipment',
+    description: 'Raypak gas heaters, CrosswindV heat pumps, Pentair & Hayward pumps and filters. Professional installation and service.',
+    image: '/images/pool-equipment.jpg',
     href: '/pools/heating',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

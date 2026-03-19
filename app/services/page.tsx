@@ -57,11 +57,11 @@ const services = [
     ),
   },
   {
-    title: 'Pool Heating',
+    title: 'Pumps, Heaters, & Equipment',
     description:
       'Extend your swim season with professional heating solutions. We install and service Raypak Digital gas heaters (199k\u2013399k BTU) and Raypak CrosswindV heat pumps with efficiency ratings up to 6.1 COP. Heat & chill models available.',
     link: '/pools/heating',
-    image: '/images/raypak-gas-heater.png',
+    image: '/images/pool-equipment.jpg',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 6.51 6.51 0 009 11.25a3 3 0 10 6 0c0-1.39-.45-2.672-1.21-3.713.885-.544 1.834-.946 2.842-1.185.39-.093.756-.21 1.094-.348z" />
