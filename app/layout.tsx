@@ -11,8 +11,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Sparkle Pools | Professional Pool Services',
-    template: '%s | Sparkle Pools',
+    default: "Sparkle Pools - Let's Get Wet!",
+    template: "%s | Sparkle Pools - Let's Get Wet!",
   },
   description:
     'Terre Haute\'s trusted pool experts. Inground pools, fiberglass pools, above ground pools, service, repair, and maintenance across the Wabash Valley.',
