@@ -71,71 +71,68 @@ export default function SalePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Pool Chemicals',
-                desc: 'Stock up for the season with discounted chemicals, shock treatments, and water care products.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-                  </svg>
-                ),
-              },
-              {
-                title: 'Equipment Deals',
-                desc: 'Special pricing on pumps, filters, heaters, robotic cleaners, and automation systems.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384-3.067A.75.75 0 005.25 12.6v6.8a.75.75 0 00.786.5l5.384-.652m0-4.08l5.384 3.067a.75.75 0 00.786-.5v-6.8a.75.75 0 00-.786-.5l-5.384.652m0 4.08V9.927" />
-                  </svg>
-                ),
-              },
-              {
-                title: 'Pool Accessories',
-                desc: 'Floats, toys, covers, ladders, lights, and everything you need for pool season.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                  </svg>
-                ),
-              },
-              {
-                title: 'New Pool Specials',
-                desc: 'Thinking about a new pool? Special financing and pricing on inground and above ground pool packages.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                  </svg>
-                ),
-              },
-              {
-                title: 'Service Discounts',
-                desc: 'Book your pool opening, liner replacement, or equipment installation at special event pricing.',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384-3.067A.75.75 0 005.25 12.6v6.8a.75.75 0 00.786.5l5.384-.652m0-4.08l5.384 3.067a.75.75 0 00.786-.5v-6.8a.75.75 0 00-.786-.5l-5.384.652m0 4.08V9.927m0 0a.75.75 0 00-.786-.5L5.25 10.079a.75.75 0 00-.786.5M11.42 9.927a.75.75 0 01.786-.5l5.384.652a.75.75 0 01.786.5" />
-                  </svg>
-                ),
-              },
-              {
-                title: 'Giveaways & More',
-                desc: 'Door prizes, free water testing, hot dogs, and fun for the whole family. Come hang out with us!',
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.58-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                  </svg>
-                ),
-              },
-            ].map((item) => (
-              <div key={item.title} className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5">
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+          {/* 15% Off Banner */}
+          <div className="bg-primary rounded-2xl p-10 text-center mb-12 shadow-lg">
+            <div className="text-6xl sm:text-7xl font-extrabold text-white mb-3">15% OFF</div>
+            <p className="text-xl text-blue-100 font-semibold">All In-Stock Products</p>
+            <p className="text-sm text-blue-200/70 mt-2">Chemicals, equipment, accessories, parts, and more. If it&apos;s on the shelf, it&apos;s on sale.*</p>
+          </div>
+
+          {/* AG Pool Deal */}
+          <div className="bg-gradient-to-r from-teal-50 to-blue-50 border-2 border-teal-200 rounded-2xl p-8 sm:p-10 mb-12">
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+              <div className="flex-1">
+                <div className="inline-block bg-teal-100 text-teal-800 font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-full mb-3">Sale Week Exclusive</div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Above Ground Pools</h3>
+                <h4 className="text-xl font-bold text-teal-700 mt-2">Free Water Hauling Included**</h4>
+                <p className="text-slate-600 mt-3 leading-relaxed">
+                  Purchase an above ground pool during sale week and we&apos;ll deliver the water to fill it &mdash; on us.
+                  Water hauling is typically an additional charge, but this week it&apos;s included with every above ground pool purchase.
+                </p>
+                <Link href="/pools/above-ground" className="inline-flex items-center gap-2 text-teal-700 font-semibold mt-4 hover:text-teal-900">
+                  View Above Ground Pools &rarr;
+                </Link>
               </div>
-            ))}
+              <div className="text-center flex-shrink-0">
+                <div className="w-32 h-32 rounded-full bg-teal-100 flex items-center justify-center">
+                  <svg className="w-16 h-16 text-teal-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z" />
+                  </svg>
+                </div>
+                <p className="text-sm font-bold text-teal-800 mt-3">FREE<br />Water Hauling</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Other deals */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-slate-900 mb-1">Chemicals</h3>
+              <p className="text-sm text-slate-500">15% off all in-stock chemicals</p>
+            </div>
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384-3.067A.75.75 0 005.25 12.6v6.8a.75.75 0 00.786.5l5.384-.652m0-4.08l5.384 3.067a.75.75 0 00.786-.5v-6.8a.75.75 0 00-.786-.5l-5.384.652m0 4.08V9.927" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-slate-900 mb-1">Equipment</h3>
+              <p className="text-sm text-slate-500">15% off pumps, filters, heaters &amp; more</p>
+            </div>
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-slate-900 mb-1">Accessories</h3>
+              <p className="text-sm text-slate-500">15% off all in-stock accessories</p>
+            </div>
           </div>
         </div>
       </section>
@@ -209,6 +206,17 @@ export default function SalePage() {
               (812) 232-1292
             </a>
           </div>
+        </div>
+      </section>
+      {/* Terms & Conditions */}
+      <section className="py-10 bg-slate-100">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <p className="text-xs text-slate-400 leading-relaxed">
+            <strong className="text-slate-500">Terms &amp; Conditions:</strong><br />
+            *15% discount applies to all in-stock products only. Does not apply to special orders, service labor, installation, or delivery fees. Cannot be combined with other offers or prior purchases. Discount taken at time of purchase. While supplies last.<br /><br />
+            **Free water hauling offer applies to above ground pool purchases only. Customer must sign a purchase contract and pay the required deposit during sale week (April 27 &ndash; May 3, 2026) to qualify. Installation address must be within 15 miles of our North location (2225 N 25th Street, Terre Haute, IN 47804). One water haul per pool purchase. Additional loads, if needed, are at standard rates. Sparkle Pools reserves the right to modify or cancel this promotion at any time.<br /><br />
+            All offers valid April 27 &ndash; May 3, 2026 only. Sparkle Pools reserves the right to limit quantities. Not responsible for typographical errors.
+          </p>
         </div>
       </section>
     </>
