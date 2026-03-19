@@ -120,6 +120,10 @@ export default async function Footer() {
                 Privacy Policy
               </Link>
               <span className="text-slate-700">·</span>
+              <Link href="/terms" className="hover:text-white transition-colors">
+                Terms &amp; Conditions
+              </Link>
+              <span className="text-slate-700">·</span>
               <span>Terre Haute, IN &amp; the Wabash Valley</span>
             </div>
           </div>
