@@ -134,6 +134,34 @@ export default function SalePage() {
               <p className="text-sm text-slate-500">15% off all in-stock accessories</p>
             </div>
           </div>
+
+          {/* Door Prizes */}
+          <div className="mt-16 text-center">
+            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-3">While You&apos;re Here</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Door Prize Giveaways</h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto mb-10">
+              Stop in during sale week and enter to win! One entry per household.
+              Winners will be drawn at the end of the sale.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3">🏊</div>
+                <h3 className="font-bold text-slate-900 text-lg">Free Pool Closing</h3>
+                <p className="text-sm text-slate-500 mt-1">We&apos;ll close your pool this fall &mdash; on us</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3">🎁</div>
+                <h3 className="font-bold text-slate-900 text-lg">$250 Gift Card</h3>
+                <p className="text-sm text-slate-500 mt-1">Good toward any product or service</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3">🎉</div>
+                <h3 className="font-bold text-slate-900 text-lg">And More!</h3>
+                <p className="text-sm text-slate-500 mt-1">Additional prizes announced soon</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-6">Limit one entry per household. No purchase necessary. Must be 18 or older to enter. See store for complete rules.</p>
+          </div>
         </div>
       </section>
 
