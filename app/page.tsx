@@ -16,7 +16,7 @@ const services = [
   {
     title: 'Fiberglass Pools',
     description: 'Factory-built Latham fiberglass pools installed in days, not months. Durable, low-maintenance, and beautiful.',
-    image: '/images/fiberglass-pool-1.jpg',
+    image: '/images/fiberglass-pool-2.jpg',
     href: '/pools/fiberglass',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -38,7 +38,7 @@ const services = [
   {
     title: 'Pool Service & Repair',
     description: 'Equipment repair, liner replacement, plumbing, and more. We service all makes and models to keep your pool running perfectly.',
-    image: '/images/fiberglass-pool-2.jpg',
+    image: '/images/fiberglass-pool-aerial.jpg',
     href: '/services/maintenance',
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
