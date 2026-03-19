@@ -115,9 +115,13 @@ export default async function Footer() {
             <p className="text-slate-500 text-sm">
               &copy; 2026 Sparkle Pools. All rights reserved.
             </p>
-            <p className="text-slate-500 text-sm">
-              Terre Haute, IN &amp; the Wabash Valley
-            </p>
+            <div className="flex items-center gap-4 text-slate-500 text-sm">
+              <Link href="/privacy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <span className="text-slate-700">·</span>
+              <span>Terre Haute, IN &amp; the Wabash Valley</span>
+            </div>
           </div>
         </div>
       </div>
