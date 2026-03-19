@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about Sparkle Pools — the Wabash Valley\'s trusted pool experts for over a decade. Authorized dealer for Latham, Merlin, Coverstar, Raypak, Pentair, Hayward, and more.',
+  description: 'Learn about Sparkle Pools — the Wabash Valley\'s trusted pool experts for over 60 years. Authorized dealer for Latham, Merlin, Coverstar, Raypak, Pentair, Hayward, and more.',
 };
 
 const values = [
@@ -70,7 +70,7 @@ export default function AboutPage() {
               Our Story
             </h1>
             <p className="mt-6 text-lg text-blue-100/90 leading-relaxed">
-              The Wabash Valley&apos;s trusted pool experts for over a decade.
+              The Wabash Valley&apos;s trusted pool experts for over 60 years.
             </p>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-5 text-lg text-slate-600 leading-relaxed">
               <p>
-                Sparkle Pools has been the Wabash Valley&apos;s trusted pool experts for over a decade. What started as a small service operation has grown into a full-service pool company &mdash; designing, building, and maintaining pools for families across Terre Haute and the surrounding communities.
+                Sparkle Pools has been the Wabash Valley&apos;s trusted pool experts for over 60 years. What started as a small service operation has grown into a full-service pool company &mdash; designing, building, and maintaining pools for families across Terre Haute and the surrounding communities.
               </p>
               <p>
                 We&apos;re not just contractors &mdash; we&apos;re your neighbors, and we take pride in every pool we touch.

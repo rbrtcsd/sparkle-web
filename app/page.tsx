@@ -127,7 +127,7 @@ export default function Home() {
               Starts Here
             </h1>
             <p className="mt-8 text-lg sm:text-xl text-blue-100/90 leading-relaxed max-w-2xl">
-              Sparkle Pools has been building and servicing pools across the Wabash Valley for over a decade. From dream pool installations to crystal-clear maintenance &mdash; we do it all.
+              Sparkle Pools has been building and servicing pools across the Wabash Valley for over 60 years. From dream pool installations to crystal-clear maintenance &mdash; we do it all.
             </p>
             <div className="mt-12 flex flex-col sm:flex-row gap-4">
               <Link
