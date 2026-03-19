@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   },
   description:
     'Terre Haute\'s trusted pool experts. Inground pools, fiberglass pools, above ground pools, service, repair, and maintenance across the Wabash Valley.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
