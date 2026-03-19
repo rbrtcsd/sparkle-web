@@ -147,6 +147,10 @@ export default function SalePage() {
             <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-3">Visit Us</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Two Locations</h2>
           </div>
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center mb-8 max-w-xl mx-auto">
+            <p className="text-sm font-bold text-amber-800">Special Sale Week Hours &mdash; Both Locations</p>
+            <p className="text-amber-700 text-sm mt-1">Mon &ndash; Fri: 9 AM &ndash; 6 PM &middot; Sat: 9 AM &ndash; 4 PM &middot; Sun: 10 AM &ndash; 2 PM</p>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100">
               <div className="bg-primary p-6">
@@ -154,7 +158,7 @@ export default function SalePage() {
                 <p className="text-blue-100/80 text-sm mt-1">2225 N 25th Street, Terre Haute, IN 47804</p>
               </div>
               <div className="p-6">
-                <p className="text-slate-600 text-sm">Monday &ndash; Friday: 9:00 AM &ndash; 5:00 PM</p>
+                <p className="text-slate-600 text-sm font-semibold">Sale Week: M&ndash;F 9&ndash;6 &middot; Sat 9&ndash;4 &middot; Sun 10&ndash;2</p>
                 <a href="tel:8122321292" className="inline-flex items-center gap-2 text-primary font-semibold text-sm mt-3 hover:text-primary-dark">
                   (812) 232-1292
                 </a>
@@ -166,7 +170,7 @@ export default function SalePage() {
                 <p className="text-blue-100/80 text-sm mt-1">5171 S US Highway 41, Terre Haute, IN 47802</p>
               </div>
               <div className="p-6">
-                <p className="text-slate-600 text-sm">Mon, Thu &ndash; Fri: 11 &ndash; 6 &middot; Sat: 9 &ndash; 3 &middot; Sun: 10 &ndash; 2</p>
+                <p className="text-slate-600 text-sm font-semibold">Sale Week: M&ndash;F 9&ndash;6 &middot; Sat 9&ndash;4 &middot; Sun 10&ndash;2</p>
                 <a href="tel:8122321292" className="inline-flex items-center gap-2 text-primary font-semibold text-sm mt-3 hover:text-primary-dark">
                   (812) 232-1292
                 </a>
