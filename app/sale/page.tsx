@@ -86,8 +86,8 @@ export default function SalePage() {
                 <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Above Ground Pools</h3>
                 <h4 className="text-xl font-bold text-teal-700 mt-2">Free Water Hauling Included**</h4>
                 <p className="text-slate-600 mt-3 leading-relaxed">
-                  Purchase an above ground pool during sale week and we&apos;ll fill it for you &mdash; completely free.
-                  Water hauling is typically an additional charge, but this week we&apos;ll deliver as many loads as it takes to fill your pool at no cost.
+                  Purchase an above ground pool during sale week and we&apos;ll haul the water to fill it &mdash; free.
+                  Water hauling is typically an additional charge, but this week it&apos;s included. We&apos;ll deliver to the nearest 6,000 gallons &mdash; you top it off with a hose.
                 </p>
                 <Link href="/pools/above-ground" className="inline-flex items-center gap-2 text-teal-700 font-semibold mt-4 hover:text-teal-900">
                   View Above Ground Pools &rarr;
@@ -242,7 +242,7 @@ export default function SalePage() {
           <p className="text-xs text-slate-400 leading-relaxed">
             <strong className="text-slate-500">Terms &amp; Conditions:</strong><br />
             *15% discount applies to all in-stock products only. Does not apply to special orders, service labor, installation, or delivery fees. Cannot be combined with other offers or prior purchases. Discount taken at time of purchase. While supplies last.<br /><br />
-            **Free water hauling offer applies to above ground pool purchases only. Customer must sign a purchase contract and pay the required deposit during sale week (April 27 &ndash; May 3, 2026) to qualify. Installation address must be within 15 miles of our North location (2225 N 25th Street, Terre Haute, IN 47804). Includes all loads necessary to fill the pool. Sparkle Pools reserves the right to modify or cancel this promotion at any time.<br /><br />
+            **Free water hauling offer applies to above ground pool purchases only. Customer must sign a purchase contract and pay the required deposit during sale week (April 27 &ndash; May 3, 2026) to qualify. Installation address must be within 15 miles of our North location (2225 N 25th Street, Terre Haute, IN 47804). Water delivery is provided to the nearest 6,000-gallon increment (e.g. a 13,500-gallon pool receives 12,000 gallons; customer is responsible for topping off the remainder). Sparkle Pools reserves the right to modify or cancel this promotion at any time.<br /><br />
             All offers valid April 27 &ndash; May 3, 2026 only. Sparkle Pools reserves the right to limit quantities. Not responsible for typographical errors.
           </p>
         </div>
