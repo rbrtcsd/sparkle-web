@@ -1,53 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
+import LinerGallery from './LinerGallery';
 
 export const metadata: Metadata = {
-  title: 'Vinyl Pool Liners',
-  description: 'Authorized Merlin Industries dealer. Premium vinyl pool liners in dozens of patterns and colors. Liner replacement for all inground vinyl pools.',
+  title: 'Vinyl Liner Replacement | Sparkle Pools',
+  description: 'Authorized Merlin Industries dealer. Premium vinyl pool liner replacement for all inground pools. Browse 50+ patterns and colors. Serving Terre Haute and the Wabash Valley.',
 };
-
-const linerPatterns = [
-  {
-    name: 'Blue Quartz',
-    image: '/images/liner-blue-quartz.jpg',
-  },
-  {
-    name: 'Island Granite',
-    image: '/images/liner-island-granite.jpg',
-  },
-  {
-    name: 'Lake Como',
-    image: '/images/liner-lake-como.jpg',
-  },
-];
-
-const collections = [
-  {
-    name: 'Aqua Intense',
-    description: 'Premium patterned liners with enhanced durability',
-  },
-  {
-    name: 'Aqua Max',
-    description: '20 mil thickness vinyl patterns for lasting beauty',
-  },
-  {
-    name: 'Traditional Vinyl',
-    description: 'Classic tile and floor combinations',
-  },
-  {
-    name: 'Solid Liners',
-    description: 'Single-color options including blue, black, gray, and white',
-  },
-  {
-    name: 'Luster',
-    description: 'Specialty finish liners with a unique sheen',
-  },
-  {
-    name: 'Texture',
-    description: 'Textured surface patterns for a distinctive look',
-  },
-];
 
 export default function LinersPage() {
   return (
@@ -58,11 +16,25 @@ export default function LinersPage() {
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-teal-300 uppercase tracking-[0.2em] mb-4">Authorized Merlin Industries Dealer</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-              Vinyl Pool Liners
+              Vinyl Liner Replacement
             </h1>
             <p className="mt-6 text-lg text-blue-100/90 leading-relaxed">
-              Transform your pool with a premium Merlin Industries vinyl liner. As an authorized dealer, we offer dozens of patterns and colors to give your pool a fresh, beautiful look.
+              Give your pool a brand new look with a premium Merlin Industries vinyl liner. We replace liners on all inground vinyl pools &mdash; not just pools we built. Browse our full pattern catalog below and request a free estimate.
             </p>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/request"
+                className="btn-pill bg-white text-primary px-8 py-3.5 text-base hover:bg-blue-50 shadow-lg text-center"
+              >
+                Request an Estimate
+              </Link>
+              <a
+                href="tel:8122321292"
+                className="btn-pill btn-pill-outline px-8 py-3.5 text-base text-center"
+              >
+                (812) 232-1292
+              </a>
+            </div>
           </div>
         </div>
         <div className="wave-divider">
@@ -72,130 +44,135 @@ export default function LinersPage() {
         </div>
       </section>
 
-      {/* Liner Pattern Gallery */}
+      {/* What We Do */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">See the Difference</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-              Featured Liner Patterns
-            </h2>
-            <p className="mt-5 text-lg text-slate-500 leading-relaxed">
-              Here are just a few of the stunning patterns available from Merlin Industries. Visit our showroom to see the full selection.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {linerPatterns.map((pattern) => (
-              <div
-                key={pattern.name}
-                className="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="relative h-56 sm:h-64">
-                  <Image src={pattern.image} alt={`${pattern.name} liner pattern`} fill className="object-cover" />
-                </div>
-                <div className="p-5 text-center">
-                  <h3 className="text-lg font-bold text-slate-900">{pattern.name}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Collections */}
-      <section className="py-24 sm:py-32 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-20">
-            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Liner Collections</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
-              Featured Collections
-            </h2>
-            <p className="mt-5 text-lg text-slate-500 leading-relaxed">
-              Merlin Industries offers a wide range of liner collections to match any style. From bold patterns to clean solids, there is a liner for every pool.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {collections.map((collection) => (
-              <div
-                key={collection.name}
-                className="card-hover group p-8 rounded-2xl border border-slate-100 bg-white shadow-lg shadow-slate-100/50"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
-                  </svg>
-                </div>
-                <h3 className="mt-6 text-lg font-bold text-slate-900">
-                  {collection.name}
-                </h3>
-                <p className="mt-3 text-sm text-slate-500 leading-relaxed">
-                  {collection.description}
-                </p>
-              </div>
-            ))}
+          <div className="max-w-3xl mx-auto lg:max-w-none lg:grid lg:grid-cols-2 lg:gap-16 items-start">
+            <div>
+              <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Our Most Popular Service</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+                Professional Liner Replacement
+              </h2>
+              <p className="mt-5 text-lg text-slate-500 leading-relaxed">
+                A new liner transforms the entire look and feel of your pool. Whether your current liner is faded, wrinkled, leaking, or you simply want a fresh style &mdash; we handle the entire process from measurement to installation.
+              </p>
+              <p className="mt-4 text-lg text-slate-500 leading-relaxed">
+                As an authorized Merlin Industries dealer, we have access to their complete catalog of premium vinyl patterns. Every liner is custom-manufactured to fit your exact pool dimensions.
+              </p>
+            </div>
+            <div className="mt-10 lg:mt-0">
+              <h3 className="text-lg font-bold text-slate-900 mb-5">What&apos;s Included:</h3>
+              <ul className="space-y-4">
+                {[
+                  'Custom-measured liner manufactured to your pool',
+                  'Drain pool and remove old liner',
+                  'Clean and prep pool floor and walls',
+                  'Install new liner with vacuum-set process',
+                  'Replace skimmer and inlet faceplates and gaskets',
+                  'Install liner lock to prevent slipping',
+                  'Fill pool and balance startup chemicals',
+                  'Most jobs completed in 1\u20132 days',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    </div>
+                    <p className="text-slate-600 leading-relaxed">{item}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Wave divider */}
+      {/* Signs Section */}
       <div className="relative">
         <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
           <path d="M0 0L48 5C96 10 192 20 288 28C384 36 480 42 576 42C672 42 768 36 864 30C960 24 1056 18 1152 18C1248 18 1344 24 1392 27L1440 30V60H0V0Z" fill="#f8fafc"/>
         </svg>
       </div>
-
-      {/* Liner Replacement */}
-      <section className="py-24 sm:py-32 bg-slate-50">
+      <section className="py-16 sm:py-20 bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto lg:max-w-none lg:grid lg:grid-cols-2 lg:gap-16 items-start">
-            <div>
-              <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Replacement Service</p>
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-                Need a New Liner?
-              </h2>
-              <p className="mt-5 text-lg text-slate-500 leading-relaxed">
-                We replace liners on all inground vinyl pools &mdash; not just pools we built. Most replacements are completed in 1&ndash;2 days so you can get back to swimming fast.
-              </p>
-            </div>
-            <div className="mt-10 lg:mt-0">
-              <h3 className="text-lg font-bold text-slate-900 mb-5">Signs it&apos;s time for a new liner:</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed">Fading or staining that chemicals can&apos;t fix</p>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed">Wrinkles that won&apos;t smooth out</p>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed">Leaks or tears in the liner</p>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed">You&apos;re ready for a fresh look and updated pattern</p>
-                </li>
-              </ul>
-            </div>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Is It Time?</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+              Signs You Need a New Liner
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: 'Fading & Staining', desc: 'Colors have washed out or chemical stains won\'t come clean' },
+              { title: 'Wrinkles & Stretching', desc: 'Liner has shifted, bunched up, or won\'t stay smooth' },
+              { title: 'Leaks & Tears', desc: 'Losing water faster than normal, visible rips or holes' },
+              { title: 'Ready for a New Look', desc: 'Your liner is dated and you want a fresh, modern pattern' },
+            ].map((sign) => (
+              <div key={sign.title} className="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
+                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                  </svg>
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-2">{sign.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{sign.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Liner Pattern Gallery */}
+      <section className="py-16 sm:py-24 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Merlin Industries Catalog</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+              Browse Liner Patterns
+            </h2>
+            <p className="mt-5 text-lg text-slate-500 leading-relaxed">
+              Explore our complete selection of Merlin Industries vinyl liner patterns. Click any pattern to see it up close. Visit our showroom to see physical samples.
+            </p>
+          </div>
+
+          <LinerGallery />
+
+          <p className="text-center text-sm text-slate-400 mt-8">
+            Colors shown are representative. Actual vinyl colors may vary slightly. Visit our showroom to view physical samples.
+          </p>
+        </div>
+      </section>
+
+      {/* Process */}
+      <div className="relative">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
+          <path d="M0 0L48 5C96 10 192 20 288 28C384 36 480 42 576 42C672 42 768 36 864 30C960 24 1056 18 1152 18C1248 18 1344 24 1392 27L1440 30V60H0V0Z" fill="#f8fafc"/>
+        </svg>
+      </div>
+      <section className="py-16 sm:py-20 bg-slate-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">How It Works</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+              The Replacement Process
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { step: '1', title: 'Request an Estimate', desc: 'Contact us online or by phone. We\'ll schedule a time to measure your pool and discuss pattern options.' },
+              { step: '2', title: 'Choose Your Pattern', desc: 'Browse the Merlin catalog and pick the perfect liner for your pool. We can bring samples to your home.' },
+              { step: '3', title: 'Custom Manufacturing', desc: 'Your liner is custom-made to your pool\'s exact measurements by Merlin Industries.' },
+              { step: '4', title: 'Professional Installation', desc: 'Our crew drains, preps, and installs your new liner. Most jobs are done in 1\u20132 days.' },
+            ].map((s) => (
+              <div key={s.step} className="text-center">
+                <div className="w-14 h-14 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mx-auto mb-5">
+                  {s.step}
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">{s.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -214,17 +191,17 @@ export default function LinersPage() {
         </div>
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-            Ready to Start Your Pool Project?
+            Ready for a New Liner?
           </h2>
           <p className="mt-6 text-lg text-blue-100/90 max-w-2xl mx-auto leading-relaxed">
-            Whether you need a brand new liner or a replacement, we are here to help. Request a service and we will get you set up.
+            Request a free estimate and we&apos;ll get you on the schedule. We replace liners on all inground vinyl pools in the Terre Haute and Wabash Valley area.
           </p>
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/request"
               className="btn-pill bg-white text-primary px-10 py-4 text-lg hover:bg-blue-50 shadow-lg"
             >
-              Request Service
+              Request an Estimate
             </Link>
             <a
               href="tel:8122321292"

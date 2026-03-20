@@ -38,10 +38,10 @@ export async function submitServiceRequest(
       customer_name: name,
       phone: phone,
       email: email || null,
-      address: fullAddress || null,
+      property_address: fullAddress || null,
       description: description,
       priority: 'Standard',
-      status: 'new',
+      status: 'Open',
       source: 'website',
     });
 

@@ -38,121 +38,114 @@ export async function submitJobApplication(
   try {
     const supabase = getServiceSupabase();
 
+    const gv = (key: string) => (formData.get(key) as string || '').trim() || null;
+    const gb = (key: string) => formData.get(key) === 'yes' || formData.get(key) === 'on';
+
     // Parse days available checkboxes
     const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-    const days_available = daysOfWeek.filter((day) => formData.get(`day_${day}`) === 'on');
+    const availability_days = daysOfWeek.filter((day) => formData.get(`day_${day}`) === 'on');
 
-    // Parse employment history (up to 3)
-    const employment_history = [];
-    for (let i = 1; i <= 3; i++) {
-      const employer = formData.get(`employer_${i}_name`) as string;
-      if (employer) {
-        employment_history.push({
-          employer: employer,
-          job_title: formData.get(`employer_${i}_title`) as string || '',
-          address_phone: formData.get(`employer_${i}_address`) as string || '',
-          supervisor: formData.get(`employer_${i}_supervisor`) as string || '',
-          start_date: formData.get(`employer_${i}_start`) as string || '',
-          end_date: formData.get(`employer_${i}_end`) as string || '',
-          reason_for_leaving: formData.get(`employer_${i}_reason`) as string || '',
-          may_contact: formData.get(`employer_${i}_contact`) === 'yes',
-        });
-      }
-    }
-
-    // Parse education
-    const education = {
-      high_school: {
-        name: formData.get('hs_name') as string || '',
-        city_state: formData.get('hs_city_state') as string || '',
-        from: formData.get('hs_from') as string || '',
-        to: formData.get('hs_to') as string || '',
-        graduated: formData.get('hs_graduated') as string || '',
-      },
-      college: {
-        name: formData.get('college_name') as string || '',
-        city_state: formData.get('college_city_state') as string || '',
-        from: formData.get('college_from') as string || '',
-        to: formData.get('college_to') as string || '',
-        major: formData.get('college_major') as string || '',
-        degree: formData.get('college_degree') as string || '',
-      },
-      other: {
-        name: formData.get('other_school_name') as string || '',
-        city_state: formData.get('other_school_city_state') as string || '',
-        from: formData.get('other_school_from') as string || '',
-        to: formData.get('other_school_to') as string || '',
-        certificate: formData.get('other_school_certificate') as string || '',
-      },
-    };
-
-    // Parse references (up to 3)
-    const references = [];
-    for (let i = 1; i <= 3; i++) {
-      const name = formData.get(`ref_${i}_name`) as string;
-      if (name) {
-        references.push({
-          name,
-          relationship: formData.get(`ref_${i}_relationship`) as string || '',
-          phone: formData.get(`ref_${i}_phone`) as string || '',
-        });
-      }
-    }
-
-    // Parse military info
-    const military_service = formData.get('military_service') === 'yes';
-    const military = military_service
-      ? {
-          branch: formData.get('military_branch') as string || '',
-          rank: formData.get('military_rank') as string || '',
-          from: formData.get('military_from') as string || '',
-          to: formData.get('military_to') as string || '',
-          discharge_type: formData.get('military_discharge') as string || '',
-          skills: formData.get('military_skills') as string || '',
-        }
-      : null;
-
-    const record = {
+    // Build flat record matching the database columns
+    const record: Record<string, unknown> = {
       first_name,
-      middle_name: formData.get('middle_name') as string || null,
+      middle_name: gv('middle_name'),
       last_name,
-      other_names: formData.get('other_names') as string || null,
-      date_of_birth: formData.get('date_of_birth') as string || null,
-      address: formData.get('address') as string || null,
+      other_names_used: gv('other_names'),
+      date_of_birth: gv('date_of_birth'),
+      address: gv('address'),
       phone,
-      email: formData.get('email') as string || null,
+      email: gv('email'),
       position,
-      employment_type: formData.get('employment_type') as string || null,
-      date_available: formData.get('date_available') as string || null,
-      desired_pay: formData.get('desired_pay') as string || null,
-      days_available,
-      heard_about_us: formData.get('heard_about_us') as string || null,
-      authorized_to_work: formData.get('authorized_to_work') === 'yes',
-      requires_sponsorship: formData.get('requires_sponsorship') === 'yes',
-      previously_worked: formData.get('previously_worked') === 'yes',
-      previously_worked_when: formData.get('previously_worked_when') as string || null,
-      has_drivers_license: formData.get('has_drivers_license') === 'yes',
-      license_state: formData.get('license_state') as string || null,
-      license_number: formData.get('license_number') as string || null,
-      license_expiration: formData.get('license_expiration') as string || null,
-      moving_violations: formData.get('moving_violations') === 'yes',
-      moving_violations_explain: formData.get('moving_violations_explain') as string || null,
-      employment_history,
-      education,
-      references,
-      military_service,
-      military,
-      pool_experience: formData.get('pool_experience') === 'yes',
-      pool_experience_details: formData.get('pool_experience_details') as string || null,
-      felony_conviction: formData.get('felony_conviction') === 'yes',
-      felony_explanation: formData.get('felony_explanation') as string || null,
-      physical_acknowledgment: true,
-      signature,
+      employment_type: gv('employment_type'),
+      start_date_available: gv('date_available'),
+      desired_salary: gv('desired_pay'),
+      availability_days,
+      how_did_you_hear: gv('heard_about_us'),
+      work_authorized: gb('authorized_to_work'),
+      requires_sponsorship: gb('requires_sponsorship'),
+      prev_employed_here: gb('previously_worked'),
+      prev_employed_when: gv('previously_worked_when'),
+      dl_valid: gb('has_drivers_license'),
+      dl_state: gv('license_state'),
+      dl_number: gv('license_number'),
+      dl_expiry: gv('license_expiration'),
+      dl_violations: gb('moving_violations'),
+      dl_violations_explanation: gv('moving_violations_explain'),
+
+      // Employment history (flat columns: emp1_, emp2_, emp3_)
+      emp1_company: gv('employer_1_name'),
+      emp1_title: gv('employer_1_title'),
+      emp1_address: gv('employer_1_address'),
+      emp1_supervisor: gv('employer_1_supervisor'),
+      emp1_start: gv('employer_1_start'),
+      emp1_end: gv('employer_1_end'),
+      emp1_reason: gv('employer_1_reason'),
+      emp1_contact_ok: gb('employer_1_contact'),
+      emp2_company: gv('employer_2_name'),
+      emp2_title: gv('employer_2_title'),
+      emp2_address: gv('employer_2_address'),
+      emp2_supervisor: gv('employer_2_supervisor'),
+      emp2_start: gv('employer_2_start'),
+      emp2_end: gv('employer_2_end'),
+      emp2_reason: gv('employer_2_reason'),
+      emp2_contact_ok: gb('employer_2_contact'),
+      emp3_company: gv('employer_3_name'),
+      emp3_title: gv('employer_3_title'),
+      emp3_address: gv('employer_3_address'),
+      emp3_supervisor: gv('employer_3_supervisor'),
+      emp3_start: gv('employer_3_start'),
+      emp3_end: gv('employer_3_end'),
+      emp3_reason: gv('employer_3_reason'),
+      emp3_contact_ok: gb('employer_3_contact'),
+
+      // Education (flat columns)
+      edu_hs_name: gv('hs_name'),
+      edu_hs_city_state: gv('hs_city_state'),
+      edu_hs_from: gv('hs_from'),
+      edu_hs_to: gv('hs_to'),
+      edu_hs_graduated: gb('hs_graduated'),
+      edu_college_name: gv('college_name'),
+      edu_college_city_state: gv('college_city_state'),
+      edu_college_from: gv('college_from'),
+      edu_college_to: gv('college_to'),
+      edu_college_degree: gv('college_degree'),
+      edu_college_major: gv('college_major'),
+      edu_other_name: gv('other_school_name'),
+      edu_other_city_state: gv('other_school_city_state'),
+      edu_other_from: gv('other_school_from'),
+      edu_other_to: gv('other_school_to'),
+      edu_other_degree: gv('other_school_certificate'),
+
+      // References (flat columns)
+      ref1_name: gv('ref_1_name'),
+      ref1_relationship: gv('ref_1_relationship'),
+      ref1_phone: gv('ref_1_phone'),
+      ref2_name: gv('ref_2_name'),
+      ref2_relationship: gv('ref_2_relationship'),
+      ref2_phone: gv('ref_2_phone'),
+      ref3_name: gv('ref_3_name'),
+      ref3_relationship: gv('ref_3_relationship'),
+      ref3_phone: gv('ref_3_phone'),
+
+      // Military
+      military_served: gb('military_service'),
+      military_branch: gv('military_branch'),
+      military_rank: gv('military_rank'),
+      military_from: gv('military_from'),
+      military_to: gv('military_to'),
+      military_discharge: gv('military_discharge'),
+      military_skills: gv('military_skills'),
+
+      // Other
+      has_pool_experience: gb('pool_experience'),
+      experience_notes: gv('pool_experience_details'),
+      convicted: gb('felony_conviction'),
+      conviction_explanation: gv('felony_explanation'),
+      physical_acknowledged: true,
+      applicant_signature: signature,
       signature_date: new Date().toISOString().split('T')[0],
       status: 'new',
-      source: 'website',
-      submitted_by: 'online',
-      created_at: new Date().toISOString(),
+      submitted_by: 'website',
     };
 
     const { error } = await supabase.from('job_applications').insert(record);
@@ -168,10 +161,10 @@ export async function submitJobApplication(
         type: 'job_application',
         title: 'New Job Application',
         message: `${first_name} ${last_name} applied for ${position} via the website`,
+        link: 'hr.html',
       });
     } catch {
-      // Non-critical — don't fail the submission if notification fails
-      console.error('Failed to create notification');
+      // Non-critical
     }
 
     return { success: true, error: null };
