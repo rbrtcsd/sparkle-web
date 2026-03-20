@@ -3,6 +3,7 @@
 import { useActionState } from 'react';
 import { submitServiceRequest, type RequestFormState } from './actions';
 import Link from 'next/link';
+import AddressAutocomplete from '@/components/AddressAutocomplete';
 
 const initialState: RequestFormState = { success: false, error: null };
 
@@ -188,6 +189,8 @@ export default function RequestPage() {
                   />
                 </div>
               </div>
+
+              <AddressAutocomplete addressId="address" cityId="city" stateId="state" zipId="zip" />
 
               {/* Description */}
               <div>
