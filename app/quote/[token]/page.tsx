@@ -35,6 +35,8 @@ type Quote = {
   valid_until: string | null;
   share_token: string;
   created_at: string;
+  category?: string;
+  agreement_data?: Record<string, unknown> | string;
 };
 
 type Settings = Record<string, string>;
@@ -131,13 +133,21 @@ export default async function QuoteViewPage({
             : '';
 
   // Fetch agreement template if needed
-  let agreementTemplate: { version: string; title: string; body: string } | null = null;
+  let agreementTemplate: Record<string, unknown> | null = null;
   if (showAgreement && quote.category) {
     const templates = settings.agreement_templates
       ? (typeof settings.agreement_templates === 'string' ? JSON.parse(settings.agreement_templates) : settings.agreement_templates)
       : {};
     agreementTemplate = templates[quote.category] || null;
   }
+
+  // Parse agreement_data from quote
+  const agreementData = quote.agreement_data
+    ? (typeof quote.agreement_data === 'string'
+      ? JSON.parse(quote.agreement_data)
+      : quote.agreement_data)
+    : undefined;
+  const taxRate = parseFloat(settings.tax_rate || '0');
 
   return (
     <div className="min-h-screen bg-[#f0f4f8] py-6 px-4" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -297,10 +307,15 @@ export default async function QuoteViewPage({
           {showAgreement && agreementTemplate && (
             <AgreementSigning
               token={token}
-              template={agreementTemplate}
+              template={agreementTemplate as { version: string; title: string; body?: string; base_package?: string; important_note?: string; conditions?: string; manager_fields?: { key: string; label: string; type: string }[]; customer_fields?: { key: string; label: string; type: string }[]; options?: { key: string; label: string; price_field: boolean }[]; deposit_formula?: string; deposit_fixed_balance?: number; deposit_balance_note?: string }}
               customerName={quote.customer_name || ''}
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL!}
               supabaseKey={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}
+              agreementData={agreementData}
+              quoteSubtotal={quote.subtotal}
+              quoteTaxTotal={quote.tax_total}
+              quoteTotal={quote.total}
+              taxRate={taxRate}
             />
           )}
           {showAgreement && !agreementTemplate && (
