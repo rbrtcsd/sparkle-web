@@ -73,7 +73,7 @@ export async function submitJobApplication(
       dl_violations_explanation: gv('moving_violations_explain'),
 
       // Employment history (flat columns: emp1_, emp2_, emp3_)
-      emp1_company: gv('employer_1_name'),
+      emp1_employer: gv('employer_1_name'),
       emp1_title: gv('employer_1_title'),
       emp1_address: gv('employer_1_address'),
       emp1_supervisor: gv('employer_1_supervisor'),
@@ -81,7 +81,7 @@ export async function submitJobApplication(
       emp1_end: gv('employer_1_end'),
       emp1_reason: gv('employer_1_reason'),
       emp1_contact_ok: gb('employer_1_contact'),
-      emp2_company: gv('employer_2_name'),
+      emp2_employer: gv('employer_2_name'),
       emp2_title: gv('employer_2_title'),
       emp2_address: gv('employer_2_address'),
       emp2_supervisor: gv('employer_2_supervisor'),
@@ -89,7 +89,7 @@ export async function submitJobApplication(
       emp2_end: gv('employer_2_end'),
       emp2_reason: gv('employer_2_reason'),
       emp2_contact_ok: gb('employer_2_contact'),
-      emp3_company: gv('employer_3_name'),
+      emp3_employer: gv('employer_3_name'),
       emp3_title: gv('employer_3_title'),
       emp3_address: gv('employer_3_address'),
       emp3_supervisor: gv('employer_3_supervisor'),
