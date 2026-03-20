@@ -191,9 +191,10 @@ export default function AgreementSigning({
             <div className="text-[13px] font-extrabold text-[#1b5fa8] uppercase tracking-[0.5px] mb-2 pb-1 border-b-2 border-[#1b5fa8]">
               Base Package Includes
             </div>
-            <div className="text-[13px] text-[#374151] leading-[1.7] whitespace-pre-wrap">
-              {template.base_package}
-            </div>
+            <div
+              className="text-[13px] text-[#374151] leading-[1.7] [&_ol]:pl-5 [&_ol]:my-1 [&_ul]:pl-5 [&_ul]:my-1 [&_li]:mb-0.5"
+              dangerouslySetInnerHTML={{ __html: template.base_package }}
+            />
           </div>
         )}
 
@@ -309,9 +310,10 @@ export default function AgreementSigning({
             <div className="text-[13px] font-extrabold text-[#1b5fa8] uppercase tracking-[0.5px] mb-2 pb-1 border-b-2 border-[#1b5fa8]">
               Agreed Conditions
             </div>
-            <div className="max-h-[350px] overflow-y-auto text-[11px] text-[#374151] whitespace-pre-wrap leading-[1.7] border-[1.5px] border-[#e5e7eb] rounded-lg p-4 bg-white">
-              {template.conditions}
-            </div>
+            <div
+              className="max-h-[350px] overflow-y-auto text-[11px] text-[#374151] leading-[1.7] border-[1.5px] border-[#e5e7eb] rounded-lg p-4 bg-white [&_ol]:pl-5 [&_ol]:my-1 [&_ul]:pl-5 [&_ul]:my-1 [&_li]:mb-0.5"
+              dangerouslySetInnerHTML={{ __html: template.conditions }}
+            />
           </div>
         )}
 
