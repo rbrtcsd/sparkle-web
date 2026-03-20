@@ -11,6 +11,7 @@ export const dynamic = 'force-dynamic';
 
 type QuoteItem = {
   id: string;
+  title: string | null;
   description: string;
   type: string;
   quantity: number;
@@ -240,8 +241,11 @@ export default async function QuoteViewPage({
                         >
                           {typeLabel}
                         </span>
-                        {li.description}
+                        {li.title || li.description}
                       </div>
+                      {li.title && li.description && (
+                        <div className="text-xs text-[#8a95a8] mt-0.5">{li.description}</div>
+                      )}
                       <div className="text-xs text-[#8a95a8] mt-0.5">
                         {li.quantity} {li.unit || 'ea'} @ {fmt(li.unit_price)}
                       </div>
