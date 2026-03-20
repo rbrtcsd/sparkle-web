@@ -25,6 +25,11 @@ export async function submitServiceRequest(
     return { success: false, error: 'Name, phone, and description are required.' };
   }
 
+  const nameParts = name.trim().split(/\s+/).filter(Boolean);
+  if (nameParts.length < 2) {
+    return { success: false, error: 'Please enter your first and last name.' };
+  }
+
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { success: false, error: 'Please enter a valid email address.' };
   }

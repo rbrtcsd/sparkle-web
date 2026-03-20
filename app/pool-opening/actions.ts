@@ -186,6 +186,11 @@ export async function submitPoolOpening(
     return { success: false, error: 'Name, phone, and address are required.' };
   }
 
+  const nameParts = name.trim().split(/\s+/).filter(Boolean);
+  if (nameParts.length < 2) {
+    return { success: false, error: 'Please enter your first and last name.' };
+  }
+
   if (!weekId || !weekLabel) {
     return { success: false, error: 'Please select a week for your opening.' };
   }
