@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
 import QuoteActions from './QuoteActions';
+import AgreementSigning from './AgreementSigning';
 
 export const metadata: Metadata = {
   title: 'Quote',
@@ -106,23 +107,37 @@ export default async function QuoteViewPage({
     .replace(/\.?0+$/, '');
 
   const isActionable = quote.status === 'sent';
-  const showBanner = ['approved', 'declined', 'converted'].includes(quote.status);
+  const showAgreement = quote.status === 'approved';
+  const showBanner = ['agreement_signed', 'deposit_paid', 'declined', 'converted'].includes(quote.status);
   const bannerText =
-    quote.status === 'approved'
-      ? 'This quote has been approved'
-      : quote.status === 'declined'
-        ? 'This quote has been declined'
-        : quote.status === 'converted'
-          ? 'This quote has been accepted and scheduled'
-          : '';
+    quote.status === 'agreement_signed'
+      ? 'Agreement signed — awaiting deposit'
+      : quote.status === 'deposit_paid'
+        ? 'Deposit received — your project is being scheduled'
+        : quote.status === 'declined'
+          ? 'This quote has been declined'
+          : quote.status === 'converted'
+            ? 'This quote has been accepted and scheduled'
+            : '';
   const bannerClass =
-    quote.status === 'approved'
-      ? 'bg-[#e8f5e9] text-[#2e7d32]'
-      : quote.status === 'declined'
-        ? 'bg-[#ffebee] text-[#c62828]'
-        : quote.status === 'converted'
-          ? 'bg-[#e0f7fa] text-[#0097a7]'
-          : '';
+    quote.status === 'agreement_signed'
+      ? 'bg-[#f3e8ff] text-[#7c3aed]'
+      : quote.status === 'deposit_paid'
+        ? 'bg-[#fff8e1] text-[#f59e0b]'
+        : quote.status === 'declined'
+          ? 'bg-[#ffebee] text-[#c62828]'
+          : quote.status === 'converted'
+            ? 'bg-[#e0f7fa] text-[#0097a7]'
+            : '';
+
+  // Fetch agreement template if needed
+  let agreementTemplate: { version: string; title: string; body: string } | null = null;
+  if (showAgreement && quote.category) {
+    const templates = settings.agreement_templates
+      ? (typeof settings.agreement_templates === 'string' ? JSON.parse(settings.agreement_templates) : settings.agreement_templates)
+      : {};
+    agreementTemplate = templates[quote.category] || null;
+  }
 
   return (
     <div className="min-h-screen bg-[#f0f4f8] py-6 px-4" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -277,6 +292,22 @@ export default async function QuoteViewPage({
 
           {/* Actions */}
           {isActionable && <QuoteActions token={token} />}
+
+          {/* Agreement Signing */}
+          {showAgreement && agreementTemplate && (
+            <AgreementSigning
+              token={token}
+              template={agreementTemplate}
+              customerName={quote.customer_name || ''}
+              supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL!}
+              supabaseKey={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}
+            />
+          )}
+          {showAgreement && !agreementTemplate && (
+            <div className="px-6 py-4 text-center font-bold text-[15px] bg-[#e8f5e9] text-[#2e7d32]">
+              This quote has been approved
+            </div>
+          )}
 
           {/* Footer */}
           <div className="px-6 py-4 text-center text-[11px] text-[#8a95a8] border-t border-[#eef1f6]">
