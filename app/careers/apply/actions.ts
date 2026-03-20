@@ -152,7 +152,7 @@ export async function submitJobApplication(
 
     if (error) {
       console.error('Supabase insert error:', error);
-      return { success: false, error: 'Something went wrong. Please try again or call us directly.' };
+      return { success: false, error: `Error: ${error.message || error.code || 'Unknown'}. Please call us at (812) 232-1292.` };
     }
 
     // Send notification to managers
