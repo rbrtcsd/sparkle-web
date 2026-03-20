@@ -47,9 +47,12 @@ export default function PoolOpeningPage() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-slate-900 mb-4">Pool opening scheduled!</h2>
-            <p className="text-lg text-slate-500 leading-relaxed mb-8">
+            <p className="text-lg text-slate-500 leading-relaxed mb-4">
               We&apos;ve received your pool opening request. Our team will reach out to confirm your appointment.
               Openings are scheduled on a first-come, first-served basis, and we&apos;ll do our best to accommodate your preferred timing.
+            </p>
+            <p className="text-sm text-slate-400 leading-relaxed mb-8">
+              If we need your signature on our pool opening terms, you&apos;ll receive an email shortly with a link to review and sign electronically.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/" className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors">

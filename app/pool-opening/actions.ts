@@ -252,6 +252,51 @@ export async function submitPoolOpening(
       } catch { /* non-blocking */ }
     }
 
+    // Auto-send terms email if customer was matched and doesn't have valid terms
+    if (custId && email) {
+      try {
+        // Get current terms version
+        const { data: termsRow } = await supabase
+          .from('app_settings')
+          .select('value')
+          .eq('key', 'opening_terms')
+          .single();
+        const termsVersion = termsRow?.value?.version;
+
+        if (termsVersion) {
+          // Check if customer has valid signature
+          const { data: sigs } = await supabase
+            .from('opening_term_signatures')
+            .select('signature_date')
+            .eq('customer_id', custId)
+            .eq('terms_version', termsVersion)
+            .order('signature_date', { ascending: false })
+            .limit(1);
+
+          let needsTerms = true;
+          if (sigs?.length) {
+            const sigDate = new Date(sigs[0].signature_date);
+            const threeYearsAgo = new Date();
+            threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
+            if (sigDate >= threeYearsAgo) needsTerms = false;
+          }
+
+          if (needsTerms) {
+            // Send terms email via edge function
+            const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://app.mysparklepools.com';
+            await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-opening-terms-email`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+              },
+              body: JSON.stringify({ customer_id: custId, to_email: email, base_url: baseUrl }),
+            });
+          }
+        }
+      } catch { /* non-blocking */ }
+    }
+
     return { success: true, error: null };
   } catch (err) {
     console.error('Pool opening submission error:', err);
