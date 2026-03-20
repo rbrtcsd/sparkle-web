@@ -6,16 +6,20 @@ import Image from 'next/image';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
 ];
 
 const poolsDropdown = [
   { href: '/pools/inground', label: 'Inground Pools' },
   { href: '/pools/fiberglass', label: 'Fiberglass Pools' },
   { href: '/pools/above-ground', label: 'Above Ground Pools' },
-  { href: '/pools/liners', label: 'Vinyl Liners' },
+];
+
+const servicesDropdown = [
+  { href: '/services', label: 'All Services' },
+  { href: '/pools/liners', label: 'Vinyl Liner Replacement' },
   { href: '/pools/safety-covers', label: 'Safety Covers' },
   { href: '/pools/heating', label: 'Heating' },
+  { href: '/services/maintenance', label: 'Maintenance' },
 ];
 
 const navLinksAfter = [
@@ -29,8 +33,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [poolsOpen, setPoolsOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [mobilePoolsOpen, setMobilePoolsOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -50,6 +57,9 @@ export default function Navbar() {
     const handleClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setPoolsOpen(false);
+      }
+      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
+        setServicesOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClick);
@@ -139,6 +149,40 @@ export default function Navbar() {
               </div>
             </div>
 
+            {/* Products & Services dropdown */}
+            <div
+              ref={servicesRef}
+              className="relative"
+              onMouseEnter={() => { setServicesOpen(true); }}
+              onMouseLeave={() => { setTimeout(() => setServicesOpen(false), 150); }}
+            >
+              <button
+                onClick={() => setServicesOpen(!servicesOpen)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${linkClass}`}
+              >
+                Products & Services
+                <svg className={`w-4 h-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div
+                className={`absolute top-full left-0 mt-1 w-56 rounded-xl bg-white shadow-lg shadow-slate-200/50 border border-slate-100 py-2 transition-all duration-200 ${
+                  servicesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
+                }`}
+              >
+                {servicesDropdown.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setServicesOpen(false)}
+                    className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-primary hover:bg-primary/5 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             {navLinksAfter.map((link) => (
               <Link
                 key={link.href}
@@ -220,6 +264,31 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => { setMobileOpen(false); setMobilePoolsOpen(false); }}
+                  className="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-primary/5 hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Mobile Products & Services expandable */}
+          <button
+            onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+            className="flex items-center justify-between w-full px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-primary/5 hover:text-primary transition-colors"
+          >
+            Products & Services
+            <svg className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          {mobileServicesOpen && (
+            <div className="pl-4 space-y-1">
+              {servicesDropdown.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => { setMobileOpen(false); setMobileServicesOpen(false); }}
                   className="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-primary/5 hover:text-primary transition-colors"
                 >
                   {item.label}
