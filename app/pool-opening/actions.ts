@@ -61,6 +61,110 @@ export async function getAvailableWeeks(): Promise<WeekOption[]> {
   }).filter(w => !w.spots_label.includes('Past'));
 }
 
+export type TermsCheckResult = {
+  needsTerms: boolean;
+  customerId: string | null;
+  termsTitle: string;
+  termsContent: string;
+  termsVersion: string;
+};
+
+export async function checkOpeningTerms(name: string, address: string): Promise<TermsCheckResult> {
+  const empty: TermsCheckResult = { needsTerms: false, customerId: null, termsTitle: '', termsContent: '', termsVersion: '' };
+
+  if (!address || address.trim().length < 5) return empty;
+
+  const supabase = getServiceSupabase();
+
+  // Get current terms
+  const { data: termsRow } = await supabase
+    .from('app_settings')
+    .select('value')
+    .eq('key', 'opening_terms')
+    .single();
+
+  const terms = termsRow?.value;
+  if (!terms?.version || !terms?.content) return empty;
+
+  // Try to match customer by address
+  const addrNormalized = address.trim().toLowerCase().replace(/[.,#]/g, '').replace(/\s+/g, ' ');
+  const addrParts = addrNormalized.split(' ');
+  const addrSearch = addrParts.slice(0, Math.min(3, addrParts.length)).join(' ');
+  const lastName = name.trim().split(/\s+/).pop()?.toLowerCase() || '';
+
+  const { data: addrMatches } = await supabase
+    .from('customers')
+    .select('customer_id, name, address, mailing_address')
+    .or(`address.ilike.%${addrSearch}%,mailing_address.ilike.%${addrSearch}%`)
+    .limit(10);
+
+  if (!addrMatches?.length) {
+    // New customer — they'll need terms
+    return { needsTerms: true, customerId: null, termsTitle: terms.title || 'Pool Opening Terms', termsContent: terms.content, termsVersion: terms.version };
+  }
+
+  // Check last name match
+  const match = addrMatches.find(c => {
+    const custLast = (c.name || '').trim().split(/\s+/).pop()?.toLowerCase() || '';
+    return custLast === lastName;
+  });
+
+  if (!match) {
+    // Address exists, different name — they'll need terms either way
+    return { needsTerms: true, customerId: null, termsTitle: terms.title || 'Pool Opening Terms', termsContent: terms.content, termsVersion: terms.version };
+  }
+
+  // Check if this customer has valid terms
+  const { data: sigs } = await supabase
+    .from('opening_term_signatures')
+    .select('signature_date')
+    .eq('customer_id', match.customer_id)
+    .eq('terms_version', terms.version)
+    .order('signature_date', { ascending: false })
+    .limit(1);
+
+  let needsTerms = true;
+  if (sigs?.length) {
+    const sigDate = new Date(sigs[0].signature_date);
+    const threeYearsAgo = new Date();
+    threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
+    if (sigDate >= threeYearsAgo) needsTerms = false;
+  }
+
+  if (!needsTerms) return empty;
+
+  return { needsTerms: true, customerId: match.customer_id, termsTitle: terms.title || 'Pool Opening Terms', termsContent: terms.content, termsVersion: terms.version };
+}
+
+export async function signOpeningTermsInline(customerId: string, signerName: string): Promise<{ success: boolean; error: string | null }> {
+  if (!customerId || !signerName) return { success: false, error: 'Missing required fields' };
+
+  const supabase = getServiceSupabase();
+
+  const { data: termsRow } = await supabase
+    .from('app_settings')
+    .select('value')
+    .eq('key', 'opening_terms')
+    .single();
+
+  const terms = termsRow?.value;
+  if (!terms?.version) return { success: false, error: 'No terms configured' };
+
+  const { error } = await supabase
+    .from('opening_term_signatures')
+    .insert({
+      customer_id: customerId,
+      terms_version: terms.version,
+      signer_name: signerName.trim(),
+      signature_date: new Date().toISOString(),
+      ip_address: 'website-inline',
+      user_agent: 'sparkle-web',
+    });
+
+  if (error) return { success: false, error: error.message };
+  return { success: true, error: null };
+}
+
 export async function submitPoolOpening(
   _prevState: OpeningFormState,
   formData: FormData
@@ -207,6 +311,18 @@ export async function submitPoolOpening(
         custId = newCust?.customer_id || null;
       }
       // else: address exists but last name didn't match — leave customer_id null for review
+    }
+
+    // Handle inline terms signing if customer signed during form submission
+    const termsCustomerId = formData.get('terms_customer_id') as string;
+    const termsAgreed = formData.get('terms_agreed') as string;
+    const termsSignerName = formData.get('terms_signer_name') as string;
+    const signTermsCustId = termsCustomerId || custId;
+
+    if (termsAgreed === 'yes' && termsSignerName && signTermsCustId) {
+      try {
+        await signOpeningTermsInline(signTermsCustId, termsSignerName);
+      } catch { /* non-blocking — terms signed is a bonus, not a blocker */ }
     }
 
     const { error } = await supabase.from('pool_openings').insert({

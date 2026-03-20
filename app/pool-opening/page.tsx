@@ -1,7 +1,7 @@
 'use client';
 
-import { useActionState, useState, useEffect } from 'react';
-import { submitPoolOpening, getAvailableWeeks, type OpeningFormState, type WeekOption } from './actions';
+import { useActionState, useState, useEffect, useCallback } from 'react';
+import { submitPoolOpening, getAvailableWeeks, checkOpeningTerms, type OpeningFormState, type WeekOption, type TermsCheckResult } from './actions';
 import Link from 'next/link';
 
 const COVER_OPTIONS: Record<string, string[]> = {
@@ -17,6 +17,28 @@ export default function PoolOpeningPage() {
   const [weeks, setWeeks] = useState<WeekOption[]>([]);
   const [weeksLoading, setWeeksLoading] = useState(true);
   const [selectedWeek, setSelectedWeek] = useState<WeekOption | null>(null);
+  const [termsCheck, setTermsCheck] = useState<TermsCheckResult | null>(null);
+  const [termsLoading, setTermsLoading] = useState(false);
+  const [termsAgreed, setTermsAgreed] = useState(false);
+  const [termsSigName, setTermsSigName] = useState('');
+  const [termsCheckedAddr, setTermsCheckedAddr] = useState('');
+
+  const handleAddressBlur = useCallback(async () => {
+    const nameEl = document.getElementById('name') as HTMLInputElement;
+    const addrEl = document.getElementById('address') as HTMLInputElement;
+    const name = nameEl?.value?.trim() || '';
+    const addr = addrEl?.value?.trim() || '';
+    if (!name || addr.length < 5 || addr === termsCheckedAddr) return;
+    setTermsCheckedAddr(addr);
+    setTermsLoading(true);
+    try {
+      const result = await checkOpeningTerms(name, addr);
+      setTermsCheck(result);
+    } catch {
+      setTermsCheck(null);
+    }
+    setTermsLoading(false);
+  }, [termsCheckedAddr]);
 
   useEffect(() => {
     getAvailableWeeks().then((w) => {
@@ -166,6 +188,7 @@ export default function PoolOpeningPage() {
                   Pool Address <span className="text-red-500">*</span>
                 </label>
                 <input type="text" id="address" name="address" required
+                  onBlur={handleAddressBlur}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                   placeholder="123 Main Street" />
               </div>
@@ -275,8 +298,50 @@ export default function PoolOpeningPage() {
                   placeholder="Gate code, equipment issues, special instructions..." />
               </div>
 
+              {/* Inline Opening Terms */}
+              {termsLoading && (
+                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 text-sm text-slate-500 text-center">
+                  Checking terms status...
+                </div>
+              )}
+
+              {termsCheck?.needsTerms && !termsLoading && (
+                <div className="rounded-xl border-2 border-amber-300 bg-amber-50 overflow-hidden">
+                  <div className="px-5 py-3 bg-amber-100 border-b border-amber-200">
+                    <div className="text-xs font-bold text-amber-800 uppercase tracking-wide mb-0.5">Action Required</div>
+                    <div className="text-sm font-bold text-amber-900">{termsCheck.termsTitle}</div>
+                  </div>
+                  <div className="px-5 py-4 max-h-[300px] overflow-y-auto text-[12px] text-slate-700 leading-relaxed [&_ol]:pl-5 [&_ol]:my-1 [&_ul]:pl-5 [&_ul]:my-1 [&_li]:mb-0.5"
+                    dangerouslySetInnerHTML={{ __html: termsCheck.termsContent }} />
+                  <div className="px-5 py-4 border-t border-amber-200 space-y-3">
+                    <div className="text-[11px] text-slate-500 leading-relaxed p-2.5 bg-white rounded-lg border border-slate-200">
+                      By typing your name below, you consent to use an electronic signature in accordance with the federal ESIGN Act.
+                    </div>
+                    <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                      <input type="checkbox" checked={termsAgreed} onChange={e => setTermsAgreed(e.target.checked)}
+                        className="mt-0.5 w-4 h-4 accent-amber-600" />
+                      <span className="text-sm text-slate-700 font-medium">I have read and agree to the pool opening terms above</span>
+                    </label>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                        Type your full name as your electronic signature
+                      </label>
+                      <input type="text" value={termsSigName} onChange={e => setTermsSigName(e.target.value)}
+                        placeholder="Your full name"
+                        className="w-full px-3.5 py-2.5 border-[1.5px] border-slate-300 rounded-lg text-[15px] font-medium italic text-slate-900 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all"
+                        style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Hidden fields for terms signing */}
+              <input type="hidden" name="terms_customer_id" value={termsCheck?.customerId || ''} />
+              <input type="hidden" name="terms_agreed" value={termsAgreed ? 'yes' : ''} />
+              <input type="hidden" name="terms_signer_name" value={termsSigName} />
+
               {/* Submit */}
-              <button type="submit" disabled={isPending}
+              <button type="submit" disabled={isPending || (termsCheck?.needsTerms && (!termsAgreed || !termsSigName.trim()))}
                 className="w-full btn-pill btn-pill-primary text-lg shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed gap-2">
                 {isPending ? (
                   <>
