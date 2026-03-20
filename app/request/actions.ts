@@ -34,15 +34,17 @@ export async function submitServiceRequest(
 
     const fullAddress = [address, city, state, zip].filter(Boolean).join(', ');
 
+    // Build description with contact info since requests table doesn't have phone/email columns
+    const contactInfo = [`Phone: ${phone}`, email ? `Email: ${email}` : ''].filter(Boolean).join(' | ');
+    const fullDescription = `${description}\n\n---\n${contactInfo}`;
+
     const { error } = await supabase.from('requests').insert({
       customer_name: name,
-      phone: phone,
-      email: email || null,
       property_address: fullAddress || null,
-      description: description,
+      description: fullDescription,
       priority: 'Standard',
       status: 'Open',
-      source: 'website',
+      submitted_by: 'Website',
     });
 
     if (error) {
