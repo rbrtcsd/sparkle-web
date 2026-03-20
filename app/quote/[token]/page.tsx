@@ -307,7 +307,7 @@ export default async function QuoteViewPage({
           {showAgreement && agreementTemplate && (
             <AgreementSigning
               token={token}
-              template={agreementTemplate as { version: string; title: string; body?: string; base_package?: string; important_note?: string; conditions?: string; manager_fields?: { key: string; label: string; type: string }[]; customer_fields?: { key: string; label: string; type: string }[]; options?: { key: string; label: string; price_field: boolean }[]; deposit_formula?: string; deposit_fixed_balance?: number; deposit_balance_note?: string }}
+              template={agreementTemplate as { version: string; title: string; body?: string; intro_text?: string; base_package?: string; important_note?: string; conditions?: string; manager_fields?: { key: string; label: string; type: string }[]; customer_fields?: { key: string; label: string; type: string }[]; options?: { key: string; label: string; price_field: boolean }[]; deposit_formula?: string; deposit_fixed_balance?: number; deposit_balance_note?: string }}
               customerName={quote.customer_name || ''}
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL!}
               supabaseKey={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}
@@ -316,6 +316,8 @@ export default async function QuoteViewPage({
               quoteTaxTotal={quote.tax_total}
               quoteTotal={quote.total}
               taxRate={taxRate}
+              quoteNumber={quote.quote_number}
+              quoteDate={quote.created_at}
             />
           )}
           {showAgreement && !agreementTemplate && (
