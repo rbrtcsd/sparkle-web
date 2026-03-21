@@ -24,6 +24,7 @@ const servicesDropdown = [
 
 const navLinksAfter = [
   { href: '/pool-opening', label: 'Pool Openings' },
+  { href: '/pool-closing', label: 'Pool Closings' },
   { href: '/careers', label: 'Careers' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
