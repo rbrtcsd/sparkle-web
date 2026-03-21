@@ -27,7 +27,7 @@ async function getWebsiteSettings() {
     const { data } = await supabase
       .from('app_settings')
       .select('key,value')
-      .in('key', ['website_seasonal', 'website_store_hours', 'website_announcement', 'website_scheduling_enabled']);
+      .in('key', ['website_seasonal', 'website_announcement', 'website_scheduling_enabled']);
     const settings: Record<string, string | boolean> = {};
     (data || []).forEach((r: { key: string; value: string | boolean }) => { settings[r.key] = r.value; });
     return settings;
@@ -53,7 +53,7 @@ export default async function RootLayout({
         )}
         <Navbar seasonal={ws.website_seasonal as string || undefined} />
         <main className="min-h-screen">{children}</main>
-        <Footer storeHours={ws.website_store_hours as string || undefined} />
+        <Footer />
       </body>
     </html>
   );
