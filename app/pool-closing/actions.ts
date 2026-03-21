@@ -80,7 +80,7 @@ export async function checkClosingTerms(name: string, address: string): Promise<
   const { data: termsRow } = await supabase
     .from('app_settings')
     .select('value')
-    .eq('key', 'opening_terms')
+    .eq('key', 'closing_terms')
     .single();
 
   const terms = termsRow?.value;
@@ -116,7 +116,7 @@ export async function checkClosingTerms(name: string, address: string): Promise<
 
   // Check if this customer has valid terms
   const { data: sigs } = await supabase
-    .from('opening_term_signatures')
+    .from('closing_term_signatures')
     .select('signature_date')
     .eq('customer_id', match.customer_id)
     .eq('terms_version', terms.version)
@@ -144,14 +144,14 @@ export async function signClosingTermsInline(customerId: string, signerName: str
   const { data: termsRow } = await supabase
     .from('app_settings')
     .select('value')
-    .eq('key', 'opening_terms')
+    .eq('key', 'closing_terms')
     .single();
 
   const terms = termsRow?.value;
   if (!terms?.version) return { success: false, error: 'No terms configured' };
 
   const { error } = await supabase
-    .from('opening_term_signatures')
+    .from('closing_term_signatures')
     .insert({
       customer_id: customerId,
       terms_version: terms.version,
@@ -380,14 +380,14 @@ export async function submitPoolClosing(
         const { data: termsRow } = await supabase
           .from('app_settings')
           .select('value')
-          .eq('key', 'opening_terms')
+          .eq('key', 'closing_terms')
           .single();
         const termsVersion = termsRow?.value?.version;
 
         if (termsVersion) {
           // Check if customer has valid signature
           const { data: sigs } = await supabase
-            .from('opening_term_signatures')
+            .from('closing_term_signatures')
             .select('signature_date')
             .eq('customer_id', custId)
             .eq('terms_version', termsVersion)
@@ -405,7 +405,7 @@ export async function submitPoolClosing(
           if (needsTerms) {
             // Send terms email via edge function
             const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://app.mysparklepools.com';
-            await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-opening-terms-email`, {
+            await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-closing-terms-email`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
