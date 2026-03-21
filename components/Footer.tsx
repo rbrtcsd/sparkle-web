@@ -20,7 +20,7 @@ const services = [
   'Service & Repair',
 ];
 
-export default async function Footer() {
+export default async function Footer({ storeHours }: { storeHours?: string } = {}) {
   const hours = await getStoreHours();
   const northSummary = condenseHours(hours.north);
   const southSummary = condenseHours(hours.south);
