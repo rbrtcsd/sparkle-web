@@ -22,13 +22,18 @@ const servicesDropdown = [
   { href: '/services/maintenance', label: 'Maintenance' },
 ];
 
-const navLinksAfter = [
-  { href: '/pool-opening', label: 'Pool Openings' },
-  { href: '/pool-closing', label: 'Pool Closings' },
-  { href: '/careers', label: 'Careers' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
-];
+function getNavLinksAfter() {
+  const month = new Date().getMonth(); // 0=Jan
+  const seasonal = month < 6
+    ? { href: '/pool-opening', label: 'Pool Openings' }
+    : { href: '/pool-closing', label: 'Pool Closings' };
+  return [
+    seasonal,
+    { href: '/careers', label: 'Careers' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
+  ];
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -184,7 +189,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {navLinksAfter.map((link) => (
+            {getNavLinksAfter().map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -298,7 +303,7 @@ export default function Navbar() {
             </div>
           )}
 
-          {navLinksAfter.map((link) => (
+          {getNavLinksAfter().map((link) => (
             <Link
               key={link.href}
               href={link.href}
