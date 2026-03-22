@@ -100,6 +100,7 @@ export default function RequestPage() {
                   id="name"
                   name="name"
                   required
+                  defaultValue={state.values?.name || ''}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                   placeholder="John Smith"
                 />
@@ -116,6 +117,7 @@ export default function RequestPage() {
                     id="phone"
                     name="phone"
                     required
+                    defaultValue={state.values?.phone || ''}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                     placeholder="(555) 123-4567"
                   />
@@ -128,6 +130,7 @@ export default function RequestPage() {
                     type="email"
                     id="email"
                     name="email"
+                    defaultValue={state.values?.email || ''}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                     placeholder="john@example.com"
                   />
@@ -144,6 +147,7 @@ export default function RequestPage() {
                   id="address"
                   name="address"
                   required
+                  defaultValue={state.values?.address || ''}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                   placeholder="123 Main Street"
                 />
@@ -160,6 +164,7 @@ export default function RequestPage() {
                     id="city"
                     name="city"
                     required
+                    defaultValue={state.values?.city || ''}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                     placeholder="Anytown"
                   />
@@ -173,6 +178,7 @@ export default function RequestPage() {
                     id="state"
                     name="state"
                     required
+                    defaultValue={state.values?.state || ''}
                     maxLength={2}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors uppercase"
                     placeholder="IN"
@@ -187,6 +193,7 @@ export default function RequestPage() {
                     id="zip"
                     name="zip"
                     required
+                    defaultValue={state.values?.zip || ''}
                     maxLength={10}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                     placeholder="47804"
@@ -205,6 +212,7 @@ export default function RequestPage() {
                   id="category"
                   name="category"
                   required
+                  defaultValue={state.values?.category || ''}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                 >
                   <option value="">— Select —</option>
@@ -229,6 +237,7 @@ export default function RequestPage() {
                   name="description"
                   required
                   rows={5}
+                  defaultValue={state.values?.description || ''}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none"
                   placeholder="Please describe the service you need, any issues you're experiencing, or questions you have..."
                 />

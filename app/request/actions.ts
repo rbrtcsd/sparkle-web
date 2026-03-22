@@ -5,6 +5,7 @@ import { getServiceSupabase } from '@/lib/supabase';
 export type RequestFormState = {
   success: boolean;
   error: string | null;
+  values?: Record<string, string>;
 };
 
 export async function submitServiceRequest(
@@ -21,18 +22,20 @@ export async function submitServiceRequest(
   const category = formData.get('category') as string;
   const description = formData.get('description') as string;
 
+  const values = { name, phone, email, address, city, state, zip, category, description };
+
   // Validation
   if (!name || !phone || !description || !category || !address || !city || !state || !zip) {
-    return { success: false, error: 'All fields except email are required.' };
+    return { success: false, error: 'All fields except email are required.', values };
   }
 
   const nameParts = name.trim().split(/\s+/).filter(Boolean);
   if (nameParts.length < 2) {
-    return { success: false, error: 'Please enter your first and last name.' };
+    return { success: false, error: 'Please enter your first and last name.', values };
   }
 
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return { success: false, error: 'Please enter a valid email address.' };
+    return { success: false, error: 'Please enter a valid email address.', values };
   }
 
   try {
@@ -146,7 +149,7 @@ export async function submitServiceRequest(
 
     if (error) {
       console.error('Supabase insert error:', error);
-      return { success: false, error: 'Something went wrong. Please try again or call us directly.' };
+      return { success: false, error: 'Something went wrong. Please try again or call us directly.', values };
     }
 
     // If customer couldn't be matched (address conflict), notify managers
@@ -164,6 +167,6 @@ export async function submitServiceRequest(
     return { success: true, error: null };
   } catch (err) {
     console.error('Request submission error:', err);
-    return { success: false, error: 'Something went wrong. Please try again or call us directly.' };
+    return { success: false, error: 'Something went wrong. Please try again or call us directly.', values };
   }
 }
