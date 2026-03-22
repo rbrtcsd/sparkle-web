@@ -128,8 +128,10 @@ export async function submitServiceRequest(
         .select('value')
         .eq('key', 'request_category_assignments')
         .single();
-      if (assignSettings?.value && typeof assignSettings.value === 'object') {
-        const assignments = assignSettings.value as Record<string, string>;
+      if (assignSettings?.value) {
+        const assignments = typeof assignSettings.value === 'string'
+          ? JSON.parse(assignSettings.value)
+          : assignSettings.value;
         assignee = assignments[category] || null;
       }
     } catch { /* non-critical */ }
