@@ -22,8 +22,8 @@ export async function submitServiceRequest(
   const description = formData.get('description') as string;
 
   // Validation
-  if (!name || !phone || !description || !category) {
-    return { success: false, error: 'Name, phone, category, and description are required.' };
+  if (!name || !phone || !description || !category || !address || !city || !state || !zip) {
+    return { success: false, error: 'All fields except email are required.' };
   }
 
   const nameParts = name.trim().split(/\s+/).filter(Boolean);

@@ -137,12 +137,13 @@ export default function RequestPage() {
               {/* Address */}
               <div>
                 <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-2">
-                  Street Address
+                  Street Address <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="address"
                   name="address"
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                   placeholder="123 Main Street"
                 />
@@ -152,40 +153,43 @@ export default function RequestPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="col-span-2">
                   <label htmlFor="city" className="block text-sm font-medium text-slate-700 mb-2">
-                    City
+                    City <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="city"
                     name="city"
+                    required
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                     placeholder="Anytown"
                   />
                 </div>
                 <div>
                   <label htmlFor="state" className="block text-sm font-medium text-slate-700 mb-2">
-                    State
+                    State <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="state"
                     name="state"
+                    required
                     maxLength={2}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors uppercase"
-                    placeholder="NY"
+                    placeholder="IN"
                   />
                 </div>
                 <div>
                   <label htmlFor="zip" className="block text-sm font-medium text-slate-700 mb-2">
-                    Zip
+                    Zip <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="zip"
                     name="zip"
+                    required
                     maxLength={10}
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="12345"
+                    placeholder="47804"
                   />
                 </div>
               </div>
