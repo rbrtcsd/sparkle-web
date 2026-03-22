@@ -5,34 +5,41 @@ import { getServiceSupabase } from '@/lib/supabase';
 export type ApplicationFormState = {
   success: boolean;
   error: string | null;
+  fields?: Record<string, string>;
 };
 
 export async function submitJobApplication(
   _prevState: ApplicationFormState,
   formData: FormData
 ): Promise<ApplicationFormState> {
+  // Preserve all text/select fields so form isn't cleared on error
+  const fields: Record<string, string> = {};
+  formData.forEach((value, key) => {
+    if (typeof value === 'string') fields[key] = value;
+  });
+
   const first_name = formData.get('first_name') as string;
   const last_name = formData.get('last_name') as string;
   const phone = formData.get('phone') as string;
 
   // Basic validation
   if (!first_name || !last_name || !phone) {
-    return { success: false, error: 'First name, last name, and phone are required.' };
+    return { success: false, error: 'First name, last name, and phone are required.', fields };
   }
 
   const position = formData.get('position') as string;
   if (!position) {
-    return { success: false, error: 'Please select a position.' };
+    return { success: false, error: 'Please select a position.', fields };
   }
 
   const signature = formData.get('signature') as string;
   if (!signature) {
-    return { success: false, error: 'Please type your full name as your signature to submit the application.' };
+    return { success: false, error: 'Please type your full name as your signature to submit the application.', fields };
   }
 
   const acknowledged = formData.get('physical_acknowledgment');
   if (!acknowledged) {
-    return { success: false, error: 'Please acknowledge the physical requirements to continue.' };
+    return { success: false, error: 'Please acknowledge the physical requirements to continue.', fields };
   }
 
   try {
@@ -152,7 +159,7 @@ export async function submitJobApplication(
 
     if (error) {
       console.error('Supabase insert error:', error);
-      return { success: false, error: 'Something went wrong. Please try again or call us at (812) 232-1292.' };
+      return { success: false, error: 'Something went wrong. Please try again or call us at (812) 232-1292.', fields };
     }
 
     // Send notification to managers
@@ -170,6 +177,6 @@ export async function submitJobApplication(
     return { success: true, error: null };
   } catch (err) {
     console.error('Application submission error:', err);
-    return { success: false, error: 'Something went wrong. Please try again or call us directly.' };
+    return { success: false, error: 'Something went wrong. Please try again or call us directly.', fields };
   }
 }

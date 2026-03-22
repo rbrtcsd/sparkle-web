@@ -56,6 +56,8 @@ export default function ApplyPage() {
   const [poolExperience, setPoolExperience] = useState(false);
   const [felonyConviction, setFelonyConviction] = useState(false);
 
+  const f = (name: string) => state.fields?.[name] ?? '';
+
   const toggleSection = (num: number) => {
     setOpenSections((prev) => ({ ...prev, [num]: !prev[num] }));
   };
@@ -149,27 +151,27 @@ export default function ApplyPage() {
                       <label htmlFor="first_name" className={labelClass}>
                         First Name <span className="text-red-500">*</span>
                       </label>
-                      <input type="text" id="first_name" name="first_name" required className={inputClass} />
+                      <input type="text" id="first_name" name="first_name" required defaultValue={f("first_name")} className={inputClass} />
                     </div>
                     <div>
                       <label htmlFor="middle_name" className={labelClass}>Middle Name</label>
-                      <input type="text" id="middle_name" name="middle_name" className={inputClass} />
+                      <input type="text" id="middle_name" name="middle_name" defaultValue={f("middle_name")} className={inputClass} />
                     </div>
                     <div>
                       <label htmlFor="last_name" className={labelClass}>
                         Last Name <span className="text-red-500">*</span>
                       </label>
-                      <input type="text" id="last_name" name="last_name" required className={inputClass} />
+                      <input type="text" id="last_name" name="last_name" required defaultValue={f("last_name")} className={inputClass} />
                     </div>
                   </div>
                   <div>
                     <label htmlFor="other_names" className={labelClass}>Other Names Used (formerly known as)</label>
-                    <input type="text" id="other_names" name="other_names" className={inputClass} />
+                    <input type="text" id="other_names" name="other_names" defaultValue={f("other_names")} className={inputClass} />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="date_of_birth" className={labelClass}>Date of Birth</label>
-                      <input type="date" id="date_of_birth" name="date_of_birth" className={inputClass} />
+                      <input type="date" id="date_of_birth" name="date_of_birth" defaultValue={f("date_of_birth")} className={inputClass} />
                     </div>
                   </div>
                   <div>
@@ -204,7 +206,7 @@ export default function ApplyPage() {
                       <label htmlFor="position" className={labelClass}>
                         Position Applied For <span className="text-red-500">*</span>
                       </label>
-                      <select id="position" name="position" required className={selectClass}>
+                      <select id="position" name="position" required defaultValue={f("position")} className={selectClass}>
                         <option value="">-- Select --</option>
                         <option value="Pool Technician">Pool Technician</option>
                         <option value="Office Staff">Office Staff</option>
@@ -214,7 +216,7 @@ export default function ApplyPage() {
                     </div>
                     <div>
                       <label htmlFor="employment_type" className={labelClass}>Employment Type</label>
-                      <select id="employment_type" name="employment_type" className={selectClass}>
+                      <select id="employment_type" name="employment_type" defaultValue={f("employment_type")} className={selectClass}>
                         <option value="">-- Select --</option>
                         <option value="Full-Time">Full-Time</option>
                         <option value="Part-Time">Part-Time</option>
@@ -225,7 +227,7 @@ export default function ApplyPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="date_available" className={labelClass}>Date Available to Start</label>
-                      <input type="date" id="date_available" name="date_available" className={inputClass} />
+                      <input type="date" id="date_available" name="date_available" defaultValue={f("date_available")} className={inputClass} />
                     </div>
                     <div>
                       <label htmlFor="desired_pay" className={labelClass}>Desired Pay</label>
@@ -245,7 +247,7 @@ export default function ApplyPage() {
                   </div>
                   <div>
                     <label htmlFor="heard_about_us" className={labelClass}>How did you hear about us?</label>
-                    <select id="heard_about_us" name="heard_about_us" className={selectClass}>
+                    <select id="heard_about_us" name="heard_about_us" defaultValue={f("heard_about_us")} className={selectClass}>
                       <option value="">-- Select --</option>
                       <option value="Indeed">Indeed</option>
                       <option value="Facebook">Facebook</option>
@@ -337,11 +339,11 @@ export default function ApplyPage() {
                       </div>
                       <div>
                         <label htmlFor="license_number" className={labelClass}>License Number</label>
-                        <input type="text" id="license_number" name="license_number" className={inputClass} />
+                        <input type="text" id="license_number" name="license_number" defaultValue={f("license_number")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="license_expiration" className={labelClass}>Expiration Date</label>
-                        <input type="date" id="license_expiration" name="license_expiration" className={inputClass} />
+                        <input type="date" id="license_expiration" name="license_expiration" defaultValue={f("license_expiration")} className={inputClass} />
                       </div>
                     </div>
                   )}
@@ -358,7 +360,7 @@ export default function ApplyPage() {
                     {movingViolations && (
                       <div className="mt-3">
                         <label htmlFor="moving_violations_explain" className={labelClass}>Please explain</label>
-                        <textarea id="moving_violations_explain" name="moving_violations_explain" rows={2} className={`${inputClass} resize-none`} />
+                        <textarea id="moving_violations_explain" name="moving_violations_explain" rows={2} defaultValue={f("moving_violations_explain")} className={`${inputClass} resize-none`} />
                       </div>
                     )}
                   </div>
@@ -379,36 +381,36 @@ export default function ApplyPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor={`employer_${i}_name`} className={labelClass}>Employer Name</label>
-                          <input type="text" id={`employer_${i}_name`} name={`employer_${i}_name`} className={inputClass} />
+                          <input type="text" id={`employer_${i}_name`} name={`employer_${i}_name`} defaultValue={f(`employer_${i}_name`)} className={inputClass} />
                         </div>
                         <div>
                           <label htmlFor={`employer_${i}_title`} className={labelClass}>Job Title</label>
-                          <input type="text" id={`employer_${i}_title`} name={`employer_${i}_title`} className={inputClass} />
+                          <input type="text" id={`employer_${i}_title`} name={`employer_${i}_title`} defaultValue={f(`employer_${i}_title`)} className={inputClass} />
                         </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor={`employer_${i}_address`} className={labelClass}>Address / Phone</label>
-                          <input type="text" id={`employer_${i}_address`} name={`employer_${i}_address`} className={inputClass} />
+                          <input type="text" id={`employer_${i}_address`} name={`employer_${i}_address`} defaultValue={f(`employer_${i}_address`)} className={inputClass} />
                         </div>
                         <div>
                           <label htmlFor={`employer_${i}_supervisor`} className={labelClass}>Supervisor Name</label>
-                          <input type="text" id={`employer_${i}_supervisor`} name={`employer_${i}_supervisor`} className={inputClass} />
+                          <input type="text" id={`employer_${i}_supervisor`} name={`employer_${i}_supervisor`} defaultValue={f(`employer_${i}_supervisor`)} className={inputClass} />
                         </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor={`employer_${i}_start`} className={labelClass}>Start Date</label>
-                          <input type="month" id={`employer_${i}_start`} name={`employer_${i}_start`} className={inputClass} />
+                          <input type="month" id={`employer_${i}_start`} name={`employer_${i}_start`} defaultValue={f(`employer_${i}_start`)} className={inputClass} />
                         </div>
                         <div>
                           <label htmlFor={`employer_${i}_end`} className={labelClass}>End Date</label>
-                          <input type="month" id={`employer_${i}_end`} name={`employer_${i}_end`} className={inputClass} />
+                          <input type="month" id={`employer_${i}_end`} name={`employer_${i}_end`} defaultValue={f(`employer_${i}_end`)} className={inputClass} />
                         </div>
                       </div>
                       <div>
                         <label htmlFor={`employer_${i}_reason`} className={labelClass}>Reason for Leaving</label>
-                        <input type="text" id={`employer_${i}_reason`} name={`employer_${i}_reason`} className={inputClass} />
+                        <input type="text" id={`employer_${i}_reason`} name={`employer_${i}_reason`} defaultValue={f(`employer_${i}_reason`)} className={inputClass} />
                       </div>
                       <div>
                         <label className={labelClass}>May we contact this employer?</label>
@@ -441,11 +443,11 @@ export default function ApplyPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label htmlFor="hs_name" className={labelClass}>School Name</label>
-                        <input type="text" id="hs_name" name="hs_name" className={inputClass} />
+                        <input type="text" id="hs_name" name="hs_name" defaultValue={f("hs_name")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="hs_city_state" className={labelClass}>City, State</label>
-                        <input type="text" id="hs_city_state" name="hs_city_state" className={inputClass} />
+                        <input type="text" id="hs_city_state" name="hs_city_state" defaultValue={f("hs_city_state")} className={inputClass} />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -459,7 +461,7 @@ export default function ApplyPage() {
                       </div>
                       <div>
                         <label htmlFor="hs_graduated" className={labelClass}>Graduated?</label>
-                        <select id="hs_graduated" name="hs_graduated" className={selectClass}>
+                        <select id="hs_graduated" name="hs_graduated" defaultValue={f("hs_graduated")} className={selectClass}>
                           <option value="">-- Select --</option>
                           <option value="Yes">Yes</option>
                           <option value="No">No</option>
@@ -477,11 +479,11 @@ export default function ApplyPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label htmlFor="college_name" className={labelClass}>School Name</label>
-                        <input type="text" id="college_name" name="college_name" className={inputClass} />
+                        <input type="text" id="college_name" name="college_name" defaultValue={f("college_name")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="college_city_state" className={labelClass}>City, State</label>
-                        <input type="text" id="college_city_state" name="college_city_state" className={inputClass} />
+                        <input type="text" id="college_city_state" name="college_city_state" defaultValue={f("college_city_state")} className={inputClass} />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
@@ -495,7 +497,7 @@ export default function ApplyPage() {
                       </div>
                       <div>
                         <label htmlFor="college_major" className={labelClass}>Major</label>
-                        <input type="text" id="college_major" name="college_major" className={inputClass} />
+                        <input type="text" id="college_major" name="college_major" defaultValue={f("college_major")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="college_degree" className={labelClass}>Degree</label>
@@ -512,25 +514,25 @@ export default function ApplyPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label htmlFor="other_school_name" className={labelClass}>School Name</label>
-                        <input type="text" id="other_school_name" name="other_school_name" className={inputClass} />
+                        <input type="text" id="other_school_name" name="other_school_name" defaultValue={f("other_school_name")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="other_school_city_state" className={labelClass}>City, State</label>
-                        <input type="text" id="other_school_city_state" name="other_school_city_state" className={inputClass} />
+                        <input type="text" id="other_school_city_state" name="other_school_city_state" defaultValue={f("other_school_city_state")} className={inputClass} />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
                         <label htmlFor="other_school_from" className={labelClass}>From</label>
-                        <input type="text" id="other_school_from" name="other_school_from" className={inputClass} />
+                        <input type="text" id="other_school_from" name="other_school_from" defaultValue={f("other_school_from")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="other_school_to" className={labelClass}>To</label>
-                        <input type="text" id="other_school_to" name="other_school_to" className={inputClass} />
+                        <input type="text" id="other_school_to" name="other_school_to" defaultValue={f("other_school_to")} className={inputClass} />
                       </div>
                       <div>
                         <label htmlFor="other_school_certificate" className={labelClass}>Certificate / Degree</label>
-                        <input type="text" id="other_school_certificate" name="other_school_certificate" className={inputClass} />
+                        <input type="text" id="other_school_certificate" name="other_school_certificate" defaultValue={f("other_school_certificate")} className={inputClass} />
                       </div>
                     </div>
                   </div>
@@ -561,30 +563,30 @@ export default function ApplyPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label htmlFor="military_branch" className={labelClass}>Branch</label>
-                            <input type="text" id="military_branch" name="military_branch" className={inputClass} />
+                            <input type="text" id="military_branch" name="military_branch" defaultValue={f("military_branch")} className={inputClass} />
                           </div>
                           <div>
                             <label htmlFor="military_rank" className={labelClass}>Rank at Discharge</label>
-                            <input type="text" id="military_rank" name="military_rank" className={inputClass} />
+                            <input type="text" id="military_rank" name="military_rank" defaultValue={f("military_rank")} className={inputClass} />
                           </div>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label htmlFor="military_from" className={labelClass}>From</label>
-                            <input type="month" id="military_from" name="military_from" className={inputClass} />
+                            <input type="month" id="military_from" name="military_from" defaultValue={f("military_from")} className={inputClass} />
                           </div>
                           <div>
                             <label htmlFor="military_to" className={labelClass}>To</label>
-                            <input type="month" id="military_to" name="military_to" className={inputClass} />
+                            <input type="month" id="military_to" name="military_to" defaultValue={f("military_to")} className={inputClass} />
                           </div>
                         </div>
                         <div>
                           <label htmlFor="military_discharge" className={labelClass}>Type of Discharge</label>
-                          <input type="text" id="military_discharge" name="military_discharge" className={inputClass} />
+                          <input type="text" id="military_discharge" name="military_discharge" defaultValue={f("military_discharge")} className={inputClass} />
                         </div>
                         <div>
                           <label htmlFor="military_skills" className={labelClass}>Skills Gained</label>
-                          <textarea id="military_skills" name="military_skills" rows={2} className={`${inputClass} resize-none`} />
+                          <textarea id="military_skills" name="military_skills" rows={2} defaultValue={f("military_skills")} className={`${inputClass} resize-none`} />
                         </div>
                       </div>
                     )}
@@ -604,7 +606,7 @@ export default function ApplyPage() {
                     {poolExperience && (
                       <div className="mt-3">
                         <label htmlFor="pool_experience_details" className={labelClass}>Please describe</label>
-                        <textarea id="pool_experience_details" name="pool_experience_details" rows={3} className={`${inputClass} resize-none`} />
+                        <textarea id="pool_experience_details" name="pool_experience_details" rows={3} defaultValue={f("pool_experience_details")} className={`${inputClass} resize-none`} />
                       </div>
                     )}
                   </div>
@@ -623,7 +625,7 @@ export default function ApplyPage() {
                     {felonyConviction && (
                       <div className="mt-3">
                         <label htmlFor="felony_explanation" className={labelClass}>Please explain</label>
-                        <textarea id="felony_explanation" name="felony_explanation" rows={3} className={`${inputClass} resize-none`} />
+                        <textarea id="felony_explanation" name="felony_explanation" rows={3} defaultValue={f("felony_explanation")} className={`${inputClass} resize-none`} />
                       </div>
                     )}
                   </div>
@@ -645,15 +647,15 @@ export default function ApplyPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                           <label htmlFor={`ref_${i}_name`} className={labelClass}>Name</label>
-                          <input type="text" id={`ref_${i}_name`} name={`ref_${i}_name`} className={inputClass} />
+                          <input type="text" id={`ref_${i}_name`} name={`ref_${i}_name`} defaultValue={f(`ref_${i}_name`)} className={inputClass} />
                         </div>
                         <div>
                           <label htmlFor={`ref_${i}_relationship`} className={labelClass}>Relationship</label>
-                          <input type="text" id={`ref_${i}_relationship`} name={`ref_${i}_relationship`} className={inputClass} placeholder="e.g. Former Manager" />
+                          <input type="text" id={`ref_${i}_relationship`} name={`ref_${i}_relationship`} defaultValue={f(`ref_${i}_relationship`)} className={inputClass} placeholder="e.g. Former Manager" />
                         </div>
                         <div>
                           <label htmlFor={`ref_${i}_phone`} className={labelClass}>Phone</label>
-                          <input type="tel" id={`ref_${i}_phone`} name={`ref_${i}_phone`} className={inputClass} />
+                          <input type="tel" id={`ref_${i}_phone`} name={`ref_${i}_phone`} defaultValue={f(`ref_${i}_phone`)} className={inputClass} />
                         </div>
                       </div>
                       {i < 3 && <hr className="border-slate-100" />}
@@ -702,7 +704,7 @@ export default function ApplyPage() {
                       id="signature"
                       name="signature"
                       required
-                      className={`${inputClass} font-serif italic text-lg`}
+                      defaultValue={f("signature")} className={`${inputClass} font-serif italic text-lg`}
                       placeholder="Your Full Name"
                     />
                   </div>
