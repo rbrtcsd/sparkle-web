@@ -45,6 +45,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        <script src="https://browser.sentry-cdn.com/8.46.0/bundle.min.js" crossOrigin="anonymous" />
+        <script dangerouslySetInnerHTML={{ __html: `if(window.Sentry)Sentry.init({dsn:'https://ec44eee551e766af84a2f208d211bace@o4511089676648449.ingest.us.sentry.io/4511089681498112',environment:location.hostname==='localhost'?'development':'production',beforeSend:function(e){e.tags=Object.assign(e.tags||{},{page:'website'});return e;}});` }} />
+      </head>
       <body className="font-sans antialiased">
         {ws.website_announcement && (
           <div className="bg-[#1b5fa8] text-white text-center text-sm font-semibold py-2.5 px-4 relative z-[60]">
