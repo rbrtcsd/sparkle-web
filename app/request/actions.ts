@@ -96,10 +96,15 @@ export async function submitServiceRequest(
 
     // No match found and no address conflict — create new customer
     if (!custId && !needsReview) {
+      const nameParts = name.trim().split(/\s+/);
+      const firstName = nameParts.slice(0, -1).join(' ') || nameParts[0] || '';
+      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
       const { data: newCust } = await supabase
         .from('customers')
         .insert({
           name: name,
+          first_name: firstName || null,
+          last_name: lastName || null,
           phone: phone,
           email: email || null,
           mailing_address: address || null,
