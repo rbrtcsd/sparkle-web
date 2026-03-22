@@ -18,11 +18,12 @@ export async function submitServiceRequest(
   const city = formData.get('city') as string;
   const state = formData.get('state') as string;
   const zip = formData.get('zip') as string;
+  const category = formData.get('category') as string;
   const description = formData.get('description') as string;
 
   // Validation
-  if (!name || !phone || !description) {
-    return { success: false, error: 'Name, phone, and description are required.' };
+  if (!name || !phone || !description || !category) {
+    return { success: false, error: 'Name, phone, category, and description are required.' };
   }
 
   const nameParts = name.trim().split(/\s+/).filter(Boolean);
@@ -111,12 +112,28 @@ export async function submitServiceRequest(
       custId = newCust?.customer_id || null;
     }
 
+    // Look up auto-assignment for this category
+    let assignee: string | null = null;
+    try {
+      const { data: assignSettings } = await supabase
+        .from('app_settings')
+        .select('value')
+        .eq('key', 'request_category_assignments')
+        .single();
+      if (assignSettings?.value && typeof assignSettings.value === 'object') {
+        const assignments = assignSettings.value as Record<string, string>;
+        assignee = assignments[category] || null;
+      }
+    } catch { /* non-critical */ }
+
     // Create the request
     const { error } = await supabase.from('requests').insert({
       customer_id: custId,
       customer_name: custName || name,
       property_address: fullAddress || null,
       description: description,
+      category: category,
+      assignee: assignee,
       priority: 'Standard',
       status: 'Open',
       submitted_by: 'Website',

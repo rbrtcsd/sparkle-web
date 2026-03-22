@@ -192,6 +192,29 @@ export default function RequestPage() {
 
               <AddressAutocomplete addressId="address" cityId="city" stateId="state" zipId="zip" />
 
+              {/* Category */}
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium text-slate-700 mb-2">
+                  What is this about? <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                >
+                  <option value="">— Select —</option>
+                  <option value="Service / Repair">Service / Repair</option>
+                  <option value="New Pool Quote">New Pool Quote</option>
+                  <option value="Pool Opening">Pool Opening</option>
+                  <option value="Pool Closing">Pool Closing</option>
+                  <option value="Liner Replacement">Liner Replacement</option>
+                  <option value="Equipment Question">Equipment Question</option>
+                  <option value="Billing / Account">Billing / Account</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
               {/* Description */}
               <div>
                 <label htmlFor="description" className="block text-sm font-medium text-slate-700 mb-2">
