@@ -115,10 +115,20 @@ export async function submitServiceRequest(
           mailing_city: city || null,
           mailing_state: state ? state.toUpperCase() : null,
           mailing_zip: zip || null,
+          sms_consent: sms_consent || false,
+          sms_consent_at: sms_consent ? new Date().toISOString() : null,
         })
         .select('customer_id')
         .single();
       custId = newCust?.customer_id || null;
+    }
+
+    // Update SMS consent on existing customer if they opted in
+    if (custId && sms_consent) {
+      await supabase.from('customers').update({
+        sms_consent: true,
+        sms_consent_at: new Date().toISOString(),
+      }).eq('customer_id', custId);
     }
 
     // Look up auto-assignment for this category

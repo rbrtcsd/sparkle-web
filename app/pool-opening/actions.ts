@@ -283,6 +283,8 @@ export async function submitPoolOpening(
           pool_type: poolType === 'inground' ? 'Inground' : poolType === 'aboveground' ? 'Above Ground' : null,
           pool_size: poolSize || null,
           cover_type: coverType || null,
+          sms_consent: sms_consent || false,
+          sms_consent_at: sms_consent ? new Date().toISOString() : null,
         })
         .select('customer_id')
         .single();
@@ -311,12 +313,22 @@ export async function submitPoolOpening(
             pool_type: poolType === 'inground' ? 'Inground' : poolType === 'aboveground' ? 'Above Ground' : null,
             pool_size: poolSize || null,
             cover_type: coverType || null,
+            sms_consent: sms_consent || false,
+            sms_consent_at: sms_consent ? new Date().toISOString() : null,
           })
           .select('customer_id')
           .single();
         custId = newCust?.customer_id || null;
       }
       // else: address exists but last name didn't match — leave customer_id null for review
+    }
+
+    // Update SMS consent on existing matched customer
+    if (custId && sms_consent) {
+      await supabase.from('customers').update({
+        sms_consent: true,
+        sms_consent_at: new Date().toISOString(),
+      }).eq('customer_id', custId);
     }
 
     // Handle inline terms signing if customer signed during form submission
