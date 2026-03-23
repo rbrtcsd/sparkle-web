@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
         </div>
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">Privacy Policy</h1>
-          <p className="mt-4 text-lg text-white/70">Effective March 19, 2026</p>
+          <p className="mt-4 text-lg text-white/70">Effective March 2026</p>
         </div>
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 60" fill="none" className="w-full h-auto">
@@ -76,6 +76,10 @@ export default function PrivacyPolicyPage() {
                 they are sent only in response to a specific request or interaction, not for marketing purposes.
               </p>
               <p className="mt-3">
+                We will never share, sell, rent, or transfer your mobile phone number or SMS opt-in data to
+                any third party, affiliate, or lead generator for marketing or promotional purposes.
+              </p>
+              <p className="mt-3">
                 Message frequency varies based on your service activity. Message and data rates may apply.
                 You can opt out of text messages at any time by replying STOP to any message or by contacting
                 us directly.
@@ -92,6 +96,7 @@ export default function PrivacyPolicyPage() {
                 <li><strong>Service providers</strong> — we use trusted third-party services to help us operate our business (e.g., email delivery, text messaging, payment processing). These providers only access your information as needed to perform services on our behalf.</li>
                 <li><strong>Legal requirements</strong> — we may disclose information if required by law, regulation, or legal process.</li>
                 <li><strong>Business transfers</strong> — if our business is acquired or merged, your information may be transferred as part of that transaction.</li>
+                <li><strong>SMS opt-in data</strong> — Your mobile number and SMS consent are never shared with third parties for marketing purposes. Our SMS provider (Twilio) receives only what is necessary to deliver messages on our behalf.</li>
               </ul>
             </div>
 

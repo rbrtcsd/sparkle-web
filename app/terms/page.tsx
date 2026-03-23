@@ -127,6 +127,14 @@ export default function TermsPage() {
                     and others. Carriers are not liable for delayed or undelivered messages.
                   </p>
                 </div>
+
+                <div>
+                  <h3 className="font-semibold text-slate-800">Data Sharing</h3>
+                  <p className="text-sm">
+                    Mobile opt-in data and consent will not be shared with any third party or affiliate
+                    for marketing or promotional purposes.
+                  </p>
+                </div>
               </div>
             </div>
 

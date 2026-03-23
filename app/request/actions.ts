@@ -21,6 +21,7 @@ export async function submitServiceRequest(
   const zip = formData.get('zip') as string;
   const category = formData.get('category') as string;
   const description = formData.get('description') as string;
+  const sms_consent = formData.get('sms_consent') === 'on';
 
   const values = { name, phone, email, address, city, state, zip, category, description };
 

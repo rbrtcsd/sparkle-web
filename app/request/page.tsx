@@ -137,6 +137,23 @@ export default function RequestPage() {
                 </div>
               </div>
 
+              {/* SMS Consent */}
+              <div>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="sms_consent"
+                    className="mt-1 h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary/20 flex-shrink-0"
+                  />
+                  <span className="text-sm text-slate-500 leading-relaxed">
+                    I agree to receive text messages from Sparkle Pools regarding my service requests,
+                    appointment reminders, quotes, and account updates. Msg &amp; data rates may apply.
+                    Reply STOP to opt out at any time.{' '}
+                    <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>
+                  </span>
+                </label>
+              </div>
+
               {/* Address */}
               <div>
                 <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-2">

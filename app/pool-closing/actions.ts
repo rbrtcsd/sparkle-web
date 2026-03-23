@@ -172,6 +172,7 @@ export async function submitPoolClosing(
   const name = formData.get('name') as string;
   const phone = formData.get('phone') as string;
   const email = formData.get('email') as string;
+  const sms_consent = formData.get('sms_consent') === 'on';
   const address = formData.get('address') as string;
   const cityState = formData.get('city_state') as string;
   const zip = formData.get('zip') as string;
