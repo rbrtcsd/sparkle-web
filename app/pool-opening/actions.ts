@@ -1,6 +1,7 @@
 'use server';
 
 import { getServiceSupabase } from '@/lib/supabase';
+import { validateAndMatchAddress } from '@/lib/address-match';
 
 export type OpeningFormState = {
   success: boolean;
@@ -230,106 +231,47 @@ export async function submitPoolOpening(
       }
     }
 
-    // ── Customer matching (server-side only, no data exposed to browser) ──
-    // Strategy: address is the anchor (pools don't move), last name confirms the household
-    const lastName = name.trim().split(/\s+/).pop()?.toLowerCase() || '';
-    const addrNormalized = address.trim().toLowerCase().replace(/[.,#]/g, '').replace(/\s+/g, ' ');
-    let custId: string | null = null;
+    // ── USPS Validation + Customer Matching ──
+    const cs = (cityState || '').split(',').map(s => s.trim());
+    const customerLastName = name.trim().split(/\s+/).pop() || '';
+    const match = await validateAndMatchAddress(address, cs[0] || '', cs[1] || '', zip, customerLastName);
 
-    // 1. Search customers by address (fuzzy match on street address)
-    if (addrNormalized.length >= 5) {
-      // Extract the street number + first word of street name for a targeted search
-      const addrParts = addrNormalized.split(' ');
-      const addrSearch = addrParts.slice(0, Math.min(3, addrParts.length)).join(' ');
+    // Use standardized address
+    const useAddr = match.standardized?.streetAddress || address;
+    const useCity = match.standardized?.city || cs[0] || '';
+    const useState = match.standardized?.state || cs[1] || '';
+    const useZip = match.standardized?.zip || zip;
 
-      const { data: addrMatches } = await supabase
-        .from('customers')
-        .select('customer_id, name, address')
-        .ilike('address', `%${addrSearch}%`)
-        .limit(10);
+    let custId = match.customerId;
 
-      if (addrMatches?.length) {
-        // Address matched — check if last name matches any result (same household)
-        const lastNameMatch = addrMatches.find(c => {
-          const custLastName = (c.name || '').trim().split(/\s+/).pop()?.toLowerCase() || '';
-          return custLastName === lastName;
-        });
-
-        if (lastNameMatch) {
-          // Address + last name match = same household, confident match
-          custId = lastNameMatch.customer_id;
-        }
-        // Address match but different last name = flag for review (possible new owner)
-        // Don't auto-match or auto-create — leave customer_id null so staff can resolve
+    // Matched existing customer — update SMS consent and fill gaps
+    if (custId) {
+      const fills: Record<string, unknown> = {};
+      const { data: cust } = await supabase.from('customers').select('phone, email').eq('customer_id', custId).single();
+      if (cust) {
+        if (!cust.phone && phone) fills.phone = phone;
+        if (!cust.email && email) fills.email = email;
       }
+      if (sms_consent) { fills.sms_consent = true; fills.sms_consent_at = new Date().toISOString(); }
+      if (Object.keys(fills).length) await supabase.from('customers').update(fills).eq('customer_id', custId);
     }
 
-    // 2. No match at all — create a new customer
-    // (Only if there was NO address match. If address matched with wrong last name,
-    //  we skip creation and leave customer_id null for staff review.)
-    if (!custId && !addrNormalized.length) {
-      // No address provided — can't match, create new
-      const cs = (cityState || '').split(',').map(s => s.trim());
+    // No match — create new customer
+    if (!custId && match.matchType === 'new') {
       const { data: newCust } = await supabase
         .from('customers')
         .insert({
-          name: name,
-          address: address,
-          city: cs[0] || null,
-          state: cs[1] || null,
-          zip: zip || null,
-          phone: phone,
-          email: email || null,
+          name, address: useAddr, city: useCity, state: useState, zip: useZip,
+          phone, email: email || null,
           pool_type: poolType === 'inground' ? 'Inground' : poolType === 'aboveground' ? 'Above Ground' : null,
-          pool_size: poolSize || null,
-          cover_type: coverType || null,
+          pool_size: poolSize || null, cover_type: coverType || null,
           sms_consent: sms_consent || false,
           sms_consent_at: sms_consent ? new Date().toISOString() : null,
         })
-        .select('customer_id')
-        .single();
+        .select('customer_id').single();
       custId = newCust?.customer_id || null;
-    } else if (!custId) {
-      // We searched but found no address match at all — safe to create new customer
-      const { data: addrCheck } = await supabase
-        .from('customers')
-        .select('customer_id')
-        .ilike('address', `%${addrNormalized.split(' ').slice(0, Math.min(3, addrNormalized.split(' ').length)).join(' ')}%`)
-        .limit(1);
-
-      if (!addrCheck?.length) {
-        // Address not in DB at all — truly new customer
-        const cs = (cityState || '').split(',').map(s => s.trim());
-        const { data: newCust } = await supabase
-          .from('customers')
-          .insert({
-            name: name,
-            address: address,
-            city: cs[0] || null,
-            state: cs[1] || null,
-            zip: zip || null,
-            phone: phone,
-            email: email || null,
-            pool_type: poolType === 'inground' ? 'Inground' : poolType === 'aboveground' ? 'Above Ground' : null,
-            pool_size: poolSize || null,
-            cover_type: coverType || null,
-            sms_consent: sms_consent || false,
-            sms_consent_at: sms_consent ? new Date().toISOString() : null,
-          })
-          .select('customer_id')
-          .single();
-        custId = newCust?.customer_id || null;
-      }
-      // else: address exists but last name didn't match — leave customer_id null for review
     }
-
-    // Update SMS consent on existing matched customer
-    if (custId && sms_consent) {
-      await supabase.from('customers').update({
-        sms_consent: true,
-        sms_consent_at: new Date().toISOString(),
-      }).eq('customer_id', custId);
-    }
+    // matchType === 'review' → custId stays null, staff resolves manually
 
     // Handle inline terms signing if customer signed during form submission
     const termsCustomerId = formData.get('terms_customer_id') as string;

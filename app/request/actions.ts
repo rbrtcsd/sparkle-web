@@ -1,6 +1,7 @@
 'use server';
 
 import { getServiceSupabase } from '@/lib/supabase';
+import { validateAndMatchAddress } from '@/lib/address-match';
 
 export type RequestFormState = {
   success: boolean;
@@ -42,79 +43,56 @@ export async function submitServiceRequest(
   try {
     const supabase = getServiceSupabase();
 
-    const fullAddress = [address, city, state, zip].filter(Boolean).join(', ');
+    // ── USPS Validation + Customer Matching ──
+    const customerLastName = name.trim().split(/\s+/).pop() || '';
+    const match = await validateAndMatchAddress(address, city, state, zip, customerLastName);
 
-    // ── Customer matching ──
-    const lastName = name.trim().split(/\s+/).pop()?.toLowerCase() || '';
-    const addrNormalized = (address || '').trim().toLowerCase().replace(/[.,#]/g, '').replace(/\s+/g, ' ');
-    let custId: string | null = null;
-    let custName: string | null = name;
-    let needsReview = false;
+    // Use standardized address if USPS validated
+    const useAddr = match.standardized?.streetAddress || address;
+    const useCity = match.standardized?.city || city;
+    const useState = match.standardized?.state || state;
+    const useZip = match.standardized?.zip || zip;
+    const fullAddress = [useAddr, useCity, useState, useZip].filter(Boolean).join(', ');
 
-    if (addrNormalized.length >= 5) {
-      // Search by first few words of the address (street number + street name)
-      const addrParts = addrNormalized.split(' ');
-      const addrSearch = addrParts.slice(0, Math.min(3, addrParts.length)).join(' ');
+    let custId = match.customerId;
+    let custName: string | null = match.customerName || name;
+    const needsReview = match.matchType === 'review';
 
-      // Search both legacy address and mailing_address columns
-      const { data: addrMatches } = await supabase
+    // Fill gaps on existing matched customer
+    if (custId) {
+      const fills: Record<string, unknown> = {};
+      const { data: cust } = await supabase
         .from('customers')
-        .select('customer_id, name, address, mailing_address')
-        .or(`address.ilike.%${addrSearch}%,mailing_address.ilike.%${addrSearch}%`)
-        .limit(10);
-
-      if (addrMatches?.length) {
-        // Address matched — check if last name matches (same household)
-        const lastNameMatch = addrMatches.find(c => {
-          const custLastName = (c.name || '').trim().split(/\s+/).pop()?.toLowerCase() || '';
-          return custLastName === lastName;
-        });
-
-        if (lastNameMatch) {
-          custId = lastNameMatch.customer_id;
-          custName = lastNameMatch.name;
-
-          // Fill gaps on existing customer (phone, email if missing)
-          const fills: Record<string, string> = {};
-          if (phone) {
-            // Check if customer has this phone already (primary or alt)
-            const { data: cust } = await supabase
-              .from('customers')
-              .select('phone, email, alt_phones, alt_emails')
-              .eq('customer_id', custId)
-              .single();
-            if (cust) {
-              if (!cust.phone) fills.phone = phone;
-              if (email && !cust.email) fills.email = email;
-            }
-          }
-          if (Object.keys(fills).length) {
-            await supabase.from('customers').update(fills).eq('customer_id', custId);
-          }
-        } else {
-          // Address exists but different last name — flag for review
-          needsReview = true;
-        }
+        .select('phone, email')
+        .eq('customer_id', custId)
+        .single();
+      if (cust) {
+        if (!cust.phone && phone) fills.phone = phone;
+        if (!cust.email && email) fills.email = email;
+      }
+      if (sms_consent) { fills.sms_consent = true; fills.sms_consent_at = new Date().toISOString(); }
+      if (Object.keys(fills).length) {
+        await supabase.from('customers').update(fills).eq('customer_id', custId);
       }
     }
 
-    // No match found and no address conflict — create new customer
-    if (!custId && !needsReview) {
+    // No match — create new customer
+    if (!custId && match.matchType === 'new') {
       const nameParts = name.trim().split(/\s+/);
       const firstName = nameParts.slice(0, -1).join(' ') || nameParts[0] || '';
-      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+      const lastNamePart = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
       const { data: newCust } = await supabase
         .from('customers')
         .insert({
-          name: name,
+          name,
           first_name: firstName || null,
-          last_name: lastName || null,
-          phone: phone,
+          last_name: lastNamePart || null,
+          phone,
           email: email || null,
-          mailing_address: address || null,
-          mailing_city: city || null,
-          mailing_state: state ? state.toUpperCase() : null,
-          mailing_zip: zip || null,
+          mailing_address: useAddr || null,
+          mailing_city: useCity || null,
+          mailing_state: useState ? useState.toUpperCase() : null,
+          mailing_zip: useZip || null,
           sms_consent: sms_consent || false,
           sms_consent_at: sms_consent ? new Date().toISOString() : null,
         })
