@@ -3,6 +3,7 @@
 import { useActionState, useState, useEffect, useCallback } from 'react';
 import { submitPoolOpening, getAvailableWeeks, checkOpeningTerms, type OpeningFormState, type WeekOption, type TermsCheckResult } from './actions';
 import Link from 'next/link';
+import AddressValidator from '@/components/AddressValidator';
 
 const COVER_OPTIONS: Record<string, string[]> = {
   inground: ['None', 'Solid w/ Watertubes', 'Solid/Mesh Safety', 'Automatic', 'Other'],
@@ -205,9 +206,10 @@ export default function PoolOpeningPage() {
                   Pool Address <span className="text-red-500">*</span>
                 </label>
                 <input type="text" id="address" name="address" required
-                  onBlur={handleAddressBlur}
+                  onBlur={() => { handleAddressBlur(); document.getElementById('__validate_address_btn')?.click(); }}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                   placeholder="123 Main Street" />
+                <AddressValidator cityId="city_state" zipId="zip" />
               </div>
 
               {/* City/State & Zip */}

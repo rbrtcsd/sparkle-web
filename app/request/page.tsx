@@ -4,6 +4,7 @@ import { useActionState } from 'react';
 import { submitServiceRequest, type RequestFormState } from './actions';
 import Link from 'next/link';
 import AddressAutocomplete from '@/components/AddressAutocomplete';
+import AddressValidator from '@/components/AddressValidator';
 
 const initialState: RequestFormState = { success: false, error: null };
 
@@ -165,9 +166,11 @@ export default function RequestPage() {
                   name="address"
                   required
                   defaultValue={state.values?.address || ''}
+                  onBlur={() => document.getElementById('__validate_address_btn')?.click()}
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                   placeholder="123 Main Street"
                 />
+                <AddressValidator cityId="city" stateId="state" zipId="zip" />
               </div>
 
               {/* City, State, Zip */}
