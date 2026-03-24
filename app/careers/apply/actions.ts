@@ -174,6 +174,20 @@ export async function submitJobApplication(
       // Non-critical
     }
 
+    // Send polished email with all application data
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-application-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+        },
+        body: JSON.stringify(record),
+      });
+    } catch {
+      // Non-critical — application is already saved to DB
+    }
+
     return { success: true, error: null };
   } catch (err) {
     console.error('Application submission error:', err);
