@@ -153,7 +153,7 @@ export default function LinerGallery() {
               <img
                 src={selected.image}
                 alt={selected.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
             </div>
             <div className="p-5 flex items-center justify-between">
