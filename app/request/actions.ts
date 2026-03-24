@@ -3,6 +3,18 @@
 import { getServiceSupabase } from '@/lib/supabase';
 import { validateAndMatchAddress } from '@/lib/address-match';
 
+export async function getRequestCategories(): Promise<string[]> {
+  try {
+    const supabase = getServiceSupabase();
+    const { data } = await supabase.from('app_settings').select('value').eq('key', 'request_categories').single();
+    if (data?.value) {
+      const val = typeof data.value === 'string' ? JSON.parse(data.value) : data.value;
+      if (Array.isArray(val) && val.length) return val;
+    }
+  } catch(e) {}
+  return [];
+}
+
 export type RequestFormState = {
   success: boolean;
   error: string | null;

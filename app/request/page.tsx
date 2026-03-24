@@ -1,15 +1,21 @@
 'use client';
 
-import { useActionState } from 'react';
-import { submitServiceRequest, type RequestFormState } from './actions';
+import { useActionState, useState, useEffect } from 'react';
+import { submitServiceRequest, type RequestFormState, getRequestCategories } from './actions';
 import Link from 'next/link';
 import AddressAutocomplete from '@/components/AddressAutocomplete';
 import AddressValidator from '@/components/AddressValidator';
 
 const initialState: RequestFormState = { success: false, error: null };
+const DEFAULT_CATEGORIES = ['Service / Repair', 'Inground Pool Quote', 'Above Ground Pool Quote', 'Inground Liner Replacement', 'Above Ground Liner Replacement', 'Equipment Question', 'Billing / Account', 'Other'];
 
 export default function RequestPage() {
   const [state, formAction, isPending] = useActionState(submitServiceRequest, initialState);
+  const [categories, setCategories] = useState<string[]>(DEFAULT_CATEGORIES);
+
+  useEffect(() => {
+    getRequestCategories().then(cats => { if (cats.length) setCategories(cats); });
+  }, []);
 
   if (state.success) {
     return (
@@ -236,14 +242,9 @@ export default function RequestPage() {
                   className="w-full px-4 py-3 rounded-lg border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                 >
                   <option value="">— Select —</option>
-                  <option value="Service / Repair">Service / Repair</option>
-                  <option value="New Pool Quote">New Pool Quote</option>
-                  <option value="Pool Opening">Pool Opening</option>
-                  <option value="Pool Closing">Pool Closing</option>
-                  <option value="Liner Replacement">Liner Replacement</option>
-                  <option value="Equipment Question">Equipment Question</option>
-                  <option value="Billing / Account">Billing / Account</option>
-                  <option value="Other">Other</option>
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
                 </select>
               </div>
 
