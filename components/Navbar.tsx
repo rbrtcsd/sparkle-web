@@ -27,7 +27,7 @@ function getNavLinksAfter(seasonal?: string) {
   if (seasonal === 'closings') {
     links.push({ href: '/pool-closing', label: 'Pool Closings' });
   } else if (seasonal !== 'none') {
-    links.push({ href: '/pool-opening', label: 'Pool Openings' });
+    links.push({ href: '/opening', label: 'Pool Openings' });
   }
   links.push(
     { href: '/careers', label: 'Careers' },
