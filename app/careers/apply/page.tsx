@@ -208,6 +208,8 @@ export default function ApplyPage() {
                       </label>
                       <select id="position" name="position" required defaultValue={f("position")} className={selectClass}>
                         <option value="">-- Select --</option>
+                        <option value="CDL Driver">CDL Driver</option>
+                        <option value="Concrete Finishing Specialist">Concrete Finishing Specialist</option>
                         <option value="Pool Technician">Pool Technician</option>
                         <option value="Office Staff">Office Staff</option>
                         <option value="Retail / Store">Retail / Store</option>

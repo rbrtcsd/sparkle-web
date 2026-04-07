@@ -157,6 +157,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Hiring Spotlight */}
+      <section className="relative -mt-4 z-10 pb-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-[2rem] border border-teal-200 bg-white/95 shadow-2xl shadow-slate-900/10 backdrop-blur">
+            <div className="grid gap-8 px-6 py-8 sm:px-10 lg:grid-cols-[1.4fr_0.85fr] lg:items-center">
+              <div>
+                <p className="text-sm font-semibold text-teal-700 uppercase tracking-[0.2em]">Now Hiring</p>
+                <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+                  CDL drivers wanted for our rapidly expanding water hauling business
+                </h2>
+                <p className="mt-4 max-w-2xl text-base sm:text-lg text-slate-600 leading-relaxed">
+                  We&apos;re growing fast and adding dependable drivers who can represent Sparkle Pools well on
+                  every delivery. If you want to join a local company with momentum, we want to hear from you.
+                </p>
+              </div>
+              <div className="rounded-[1.5rem] hero-gradient px-6 py-6 text-white">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-300">Driver Recruitment</p>
+                <p className="mt-3 text-2xl font-bold tracking-tight">Water Hauling Division</p>
+                <p className="mt-3 text-sm text-blue-100/90 leading-relaxed">
+                  Immediate openings available. Apply online today or explore the full careers page for additional roles.
+                </p>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
+                  <Link
+                    href="/careers/apply"
+                    className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-blue-50"
+                  >
+                    Apply Now
+                  </Link>
+                  <Link
+                    href="/careers"
+                    className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                  >
+                    View Careers
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Overview */}
       <section className="py-24 sm:py-32 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

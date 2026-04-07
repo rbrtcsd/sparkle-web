@@ -45,6 +45,18 @@ const benefits = [
 
 const positions = [
   {
+    title: 'CDL Driver',
+    description:
+      'Support our rapidly expanding water hauling operation with safe, dependable delivery runs and professional service on every stop.',
+    type: 'Full-Time',
+  },
+  {
+    title: 'Concrete Finishing Specialist',
+    description:
+      'Help our installation team pour, shape, and finish high-quality concrete decks and flatwork with pride in clean, durable results.',
+    type: 'Full-Time / Seasonal',
+  },
+  {
     title: 'Pool Technician',
     description:
       'Install, service, and repair residential pools. Operate equipment, handle chemicals, and provide great customer service.',
@@ -134,6 +146,34 @@ export default function CareersPage() {
       {/* Open Positions */}
       <section className="py-24 sm:py-32 bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 max-w-5xl mx-auto overflow-hidden rounded-[2rem] border border-teal-200 bg-gradient-to-br from-teal-50 via-white to-blue-50 shadow-lg shadow-teal-100/50">
+            <div className="grid gap-8 px-8 py-8 sm:px-10 lg:grid-cols-[1.5fr_0.9fr] lg:items-center">
+              <div>
+                <p className="text-sm font-semibold text-teal-700 uppercase tracking-[0.2em]">Featured Hiring Need</p>
+                <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                  CDL drivers needed for our expanding water hauling division
+                </h2>
+                <p className="mt-4 text-base text-slate-600 leading-relaxed">
+                  As demand grows across the Wabash Valley, we&apos;re building out our water hauling team with
+                  drivers who take safety, reliability, and customer service seriously.
+                </p>
+              </div>
+              <div className="rounded-[1.5rem] bg-slate-900 px-6 py-6 text-white">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-300">Now Interviewing</p>
+                <p className="mt-3 text-lg font-semibold">CDL Driver</p>
+                <p className="mt-2 text-sm text-slate-300 leading-relaxed">
+                  Join a growing part of the business with consistent work and a team that knows the local market.
+                </p>
+                <Link
+                  href="/careers/apply"
+                  className="mt-5 inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-100"
+                >
+                  Apply for CDL Driver
+                </Link>
+              </div>
+            </div>
+          </div>
+
           <div className="text-center max-w-2xl mx-auto mb-16">
             <p className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Now Hiring</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
@@ -144,7 +184,7 @@ export default function CareersPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {positions.map((position) => (
               <div
                 key={position.title}
